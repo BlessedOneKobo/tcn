@@ -1,9 +1,75 @@
+<script>
+export default {
+  data() {
+    return {
+      ws: null,
+      transmissionData: {
+        power: "",
+        mvar: "",
+        voltage: "",
+        current: "",
+      },
+      transmissionUnit: Object.freeze({
+        power: "mw",
+        mvar: "amp",
+        voltage: "kv",
+        current: "mvar",
+      }),
+      threshold: Object.freeze({
+        voltage: { min: 340, max: 350 },
+      }),
+    };
+  },
+  computed: {
+    voltageDisplayClass() {
+      const { voltage } = this.transmissionData;
+      const { voltage: voltageThreshold } = this.threshold;
+
+      if (voltage > voltageThreshold.max || voltage < voltageThreshold.min) {
+        return "error";
+      }
+
+      return "";
+    },
+    transmissionDataMessage() {
+      return (property) => {
+        const data = this.transmissionData[property];
+        const unit = this.transmissionUnit[property];
+
+        if (!data) {
+          return "Loading...";
+        }
+
+        return `${data}${unit}`;
+      };
+    },
+  },
+  methods: {
+    logOut() {
+      if (this.ws) {
+        this.ws.close();
+      }
+
+      localStorage.removeItem("tcn-accessToken");
+      this.$router.push({ name: "Login" });
+    },
+  },
+  mounted() {
+    this.ws = new WebSocket("ws://193.148.63.148:8080/");
+
+    this.ws.onmessage = (msg) => {
+      this.transmissionData = JSON.parse(msg.data);
+    };
+  },
+};
+</script>
+
 <template>
   <div>
     <div class="navigation">
       <h2 class="description">Ugwuaji 330 kva power line</h2>
       <div class="logout-section">
-        <button>Log out</button>
+        <button @click="logOut">Log out</button>
       </div>
     </div>
 
@@ -14,7 +80,9 @@
             <img src="@/assets/watt.png" width="170" height="92" />
           </div>
           <div class="detail">
-            <span class="detail-text">190mw</span>
+            <span class="detail-text">
+              {{ transmissionDataMessage("power") }}
+            </span>
           </div>
         </div>
 
@@ -23,7 +91,9 @@
             <img src="@/assets/amp.png" width="170" height="92" />
           </div>
           <div class="detail">
-            <span class="detail-text">220amp</span>
+            <span class="detail-text">
+              {{ transmissionDataMessage("current") }}
+            </span>
           </div>
         </div>
 
@@ -32,7 +102,9 @@
             <img src="@/assets/volt.png" width="170" height="92" />
           </div>
           <div class="detail">
-            <span class="detail-text">12kv</span>
+            <span class="detail-text" :class="voltageDisplayClass">
+              {{ transmissionDataMessage("voltage") }}
+            </span>
           </div>
         </div>
 
@@ -41,7 +113,9 @@
             <img src="@/assets/reactive.png" width="170" height="92" />
           </div>
           <div class="detail">
-            <span class="detail-text">3000mx</span>
+            <span class="detail-text">
+              {{ transmissionDataMessage("mvar") }}
+            </span>
           </div>
         </div>
       </div>
@@ -84,6 +158,9 @@
 .details-card {
   display: flex;
   justify-content: space-between;
+}
+.details-card.error {
+  color: red;
 }
 .details-card:not(:last-of-type) {
   margin-bottom: 1.5em;

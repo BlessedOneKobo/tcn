@@ -35,7 +35,7 @@ export default {
       this.loading = true;
       const response = await fetch("http://193.148.63.148:3001/login", {
         method: "POST",
-        header: {
+        headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
@@ -49,7 +49,7 @@ export default {
         return;
       }
 
-      localStorage.setItem("tcn-accessToken", json.accessToken);
+      localStorage.setItem("tcn-accessToken", json.token);
       this.$router.push({ name: "Home" });
     },
     validate(modelName) {

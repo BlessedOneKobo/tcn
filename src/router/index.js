@@ -13,7 +13,7 @@ const routes = [
     beforeEnter(to, from, next) {
       const accessToken = localStorage.getItem("tcn-accessToken");
 
-      if (accessToken) {
+      if (accessToken && accessToken !== "undefined") {
         next();
       } else {
         next({ name: "Login" });
