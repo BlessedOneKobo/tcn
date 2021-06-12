@@ -1,4 +1,7 @@
 <script>
+import { LOGIN_ADDR, STORAGE_KEY } from "@/constants";
+import { RouteEnum } from "@/router";
+
 export default {
   data() {
     return {
@@ -33,7 +36,7 @@ export default {
       }
 
       this.loading = true;
-      const response = await fetch("http://193.148.63.148:3001/login", {
+      const response = await fetch(LOGIN_ADDR, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -49,8 +52,8 @@ export default {
         return;
       }
 
-      localStorage.setItem("tcn-accessToken", json.token);
-      this.$router.push({ name: "Home" });
+      localStorage.setItem(STORAGE_KEY, json.token);
+      this.$router.push(RouteEnum.HOME);
     },
     validate(modelName) {
       if (this.formData[modelName]) {
@@ -67,7 +70,9 @@ export default {
   <div class="container">
     <div class="login-card">
       <h2>Login</h2>
-      <p>{{ errorData.general }}</p>
+      <p v-if="errorData.general" class="error general">
+        {{ errorData.general }}
+      </p>
       <form @submit.prevent="logIn" novalidate>
         <div class="form-group">
           <label for="username">Username</label>
@@ -78,7 +83,7 @@ export default {
             :disabled="loading"
             @input="errorData.username = validate('username')"
           />
-          <small>{{ errorData.username }}</small>
+          <small class="error">{{ errorData.username }}</small>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -89,7 +94,7 @@ export default {
             :disabled="loading"
             @input="errorData.password = validate('password')"
           />
-          <small>{{ errorData.password }}</small>
+          <small class="error">{{ errorData.password }}</small>
         </div>
         <div>
           <button :disabled="loading">{{ buttonText }}</button>
@@ -131,9 +136,23 @@ button[disabled] {
   cursor: default;
   opacity: 0.4;
 }
-small {
+form {
+  margin: 0 auto;
+  max-width: 60%;
+  text-align: center;
+}
+.error {
   display: block;
   color: red;
+}
+.error.general {
+  padding: 1em;
+  background-color: #fff;
+  margin: 2em auto;
+  text-align: center;
+  max-width: 75%;
+}
+.error:not(:.general) {
   margin-top: 0.25em;
   font-size: 0.75em;
 }
