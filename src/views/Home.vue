@@ -26,6 +26,7 @@ export default {
         type: "error",
       },
       timeout: null,
+      reconnectInterval: null,
     };
   },
   computed: {
@@ -53,6 +54,56 @@ export default {
     },
   },
   methods: {
+    connect() {
+      this.ws = new WebSocket(SOCKET_ADDR);
+
+      this.ws.onmessage = (msg) => {
+        if (this.timeoutFlag) {
+          this.showConnectionMessage();
+        }
+
+        clearTimeout(this.timeout);
+        this.transmissionData = JSON.parse(msg.data);
+
+        this.timeout = setTimeout(() => {
+          this.timeoutFlag = true;
+          this.msg = {
+            text: "Connection lost",
+            type: "error",
+          };
+        }, 30000);
+      };
+
+      this.ws.onerror = (e) => {
+        console.log("onerror", e);
+      };
+
+      this.ws.onclose = (e) => {
+        console.log("onclose", e);
+        this.reconnectInterval = setInterval(() => {
+          this.connect();
+        }, 5000);
+      };
+
+      this.ws.onopen = (e) => {
+        console.log("onopen", e);
+        clearInterval(this.reconnectInterval);
+
+        if (this.timeoutFlag) {
+          this.showConnectionMessage();
+        }
+      };
+    },
+    showConnectionMessage() {
+      this.timeoutFlag = false;
+      this.msg = {
+        text: "Connected",
+        type: "success",
+      };
+      setTimeout(() => {
+        this.msg.text = "";
+      }, 5000);
+    },
     logOut() {
       if (this.ws) {
         this.ws.close();
@@ -63,35 +114,7 @@ export default {
     },
   },
   mounted() {
-    this.ws = new WebSocket(SOCKET_ADDR);
-
-    this.ws.onmessage = (msg) => {
-      if (this.timeout) {
-        this.msg = {
-          text: "Connected",
-          type: "success",
-        };
-        setTimeout(() => {
-          this.msg.text = "";
-        }, 5000);
-      }
-
-      clearTimeout(this.timeout);
-      this.timeout = null;
-
-      this.transmissionData = JSON.parse(msg.data);
-
-      this.timeout = setTimeout(() => {
-        this.msg = {
-          text: "Connection lost",
-          type: "error",
-        };
-      }, 30000);
-    };
-
-    this.ws.onerror = (msg) => {
-      console.log("error", msg);
-    };
+    this.connect();
   },
 };
 </script>
