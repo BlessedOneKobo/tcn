@@ -33,7 +33,7 @@ export default {
       }
 
       this.loading = true;
-      const response = await fetch("http://193.148.63.148:3001/login", {
+      const response = await fetch("https://193.148.63.148:3001/login", {
         method: "POST",
         headers: {
           Accept: "application/json",
