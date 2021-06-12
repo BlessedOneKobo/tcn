@@ -1,3 +1,4 @@
+import { STORAGE_KEY } from "@/constants";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
@@ -5,24 +6,27 @@ import Login from "../views/Login.vue";
 
 Vue.use(VueRouter);
 
+export const RouteEnum = Object.freeze({
+  LOGIN: { path: "/login", name: "Login" },
+  HOME: { path: "/", name: "Home" },
+});
+
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    ...RouteEnum.HOME,
     component: Home,
     beforeEnter(to, from, next) {
-      const accessToken = localStorage.getItem("tcn-accessToken");
+      const accessToken = localStorage.getItem(STORAGE_KEY);
 
       if (accessToken && accessToken !== "undefined") {
         next();
       } else {
-        next({ name: "Login" });
+        next(RouteEnum.LOGIN);
       }
     },
   },
   {
-    path: "/login",
-    name: "Login",
+    ...RouteEnum.LOGIN,
     component: Login,
   },
 ];

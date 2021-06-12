@@ -1,4 +1,7 @@
 <script>
+import { SOCKET_ADDR, STORAGE_KEY } from "@/constants";
+import { RouteEnum } from "@/router";
+
 export default {
   data() {
     return {
@@ -11,13 +14,19 @@ export default {
       },
       transmissionUnit: Object.freeze({
         power: "mw",
-        mvar: "amp",
+        mvar: "mvar",
         voltage: "kv",
-        current: "mvar",
+        current: "amp",
       }),
       threshold: Object.freeze({
         voltage: { min: 340, max: 350 },
       }),
+      msg: {
+        text: "",
+        type: "error",
+      },
+      timeout: null,
+      reconnectInterval: null,
     };
   },
   computed: {
@@ -45,21 +54,67 @@ export default {
     },
   },
   methods: {
+    connect() {
+      this.ws = new WebSocket(SOCKET_ADDR);
+
+      this.ws.onmessage = (msg) => {
+        if (this.timeoutFlag) {
+          this.showConnectionMessage();
+        }
+
+        clearTimeout(this.timeout);
+        this.transmissionData = JSON.parse(msg.data);
+
+        this.timeout = setTimeout(() => {
+          this.timeoutFlag = true;
+          this.msg = {
+            text: "Connection lost",
+            type: "error",
+          };
+        }, 30000);
+      };
+
+      this.ws.onerror = (e) => {
+        console.log("onerror", e);
+      };
+
+      this.ws.onclose = (e) => {
+        console.log("onclose", e);
+        this.reconnectInterval = setInterval(() => {
+          this.connect();
+        }, 5000);
+      };
+
+      this.ws.onopen = (e) => {
+        console.log("onopen", e);
+        clearInterval(this.reconnectInterval);
+
+        if (this.timeoutFlag) {
+          this.showConnectionMessage();
+        }
+      };
+    },
+    showConnectionMessage() {
+      this.timeoutFlag = false;
+      this.msg = {
+        text: "Connected",
+        type: "success",
+      };
+      setTimeout(() => {
+        this.msg.text = "";
+      }, 5000);
+    },
     logOut() {
       if (this.ws) {
         this.ws.close();
       }
 
-      localStorage.removeItem("tcn-accessToken");
-      this.$router.push({ name: "Login" });
+      localStorage.removeItem(STORAGE_KEY);
+      this.$router.push(RouteEnum.LOGIN);
     },
   },
   mounted() {
-    this.ws = new WebSocket("ws://193.148.63.148:8080/");
-
-    this.ws.onmessage = (msg) => {
-      this.transmissionData = JSON.parse(msg.data);
-    };
+    this.connect();
   },
 };
 </script>
@@ -72,6 +127,10 @@ export default {
         <button @click="logOut">Log out</button>
       </div>
     </div>
+
+    <p v-if="msg.text" class="general" :class="msg.type">
+      {{ msg.text }}
+    </p>
 
     <div class="container">
       <div class="main-card">
@@ -150,6 +209,22 @@ export default {
   padding-left: -15px;
   padding-bottom: 30px;
 }
+.general {
+  background-color: #fff;
+  padding: 1.25em;
+  margin: 1.25em auto;
+  max-width: 75%;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.general.error {
+  color: #f00;
+}
+.general.success {
+  color: #0f7f0f;
+}
 .main-card {
   background-color: var(--dark-blue);
   padding: 2em 1em;
@@ -203,40 +278,35 @@ export default {
   }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 768px) {
   .container {
-    margin-top: 3em;
-    padding-right: 120px;
-    padding-left: 120px;
+    max-width: 60%;
+    margin: 3em auto;
   }
-
   .main-card {
-    padding: 1.25em 2em;
+    max-width: 75%;
+    margin: 0 auto;
   }
-  .details-card .detail-text {
-    font-size: 2em;
+  .details-card {
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .details-card .detail {
+    max-height: 2em;
+    font-weight: bold;
+    font-size: 0.75em;
+    padding: 1em;
+    margin-left: 1em;
   }
 }
 
 @media (min-width: 1150px) {
-  .container {
-    margin-top: 6em;
-  }
   .navigation {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding-left: 120px;
     padding-right: 120px;
-  }
-  .main-card {
-    padding: 2.5em 4em;
-  }
-}
-
-@media (min-width: 1200px) {
-  .details-card .detail-text {
-    font-size: 2.25em;
   }
 }
 </style>
