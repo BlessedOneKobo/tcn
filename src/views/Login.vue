@@ -35,25 +35,35 @@ export default {
         return;
       }
 
+      this.errorData.general = "";
       this.loading = true;
-      const response = await fetch(LOGIN_ADDR, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(this.formData),
-      });
-      const json = await response.json();
-      this.loading = false;
 
-      if (!response.ok) {
-        this.errorData.general = json.message;
-        return;
+      let response;
+      let json;
+
+      try {
+        response = await fetch(LOGIN_ADDR, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.formData),
+        });
+        json = await response.json();
+
+        if (!response.ok) {
+          throw new Error(json.message);
+        }
+
+        localStorage.setItem(STORAGE_KEY, json.token);
+        this.$router.push(RouteEnum.HOME);
+      } catch (err) {
+        this.errorData.general =
+          err.message || "Could not log in. Please try again";
       }
 
-      localStorage.setItem(STORAGE_KEY, json.token);
-      this.$router.push(RouteEnum.HOME);
+      this.loading = false;
     },
     validate(modelName) {
       if (this.formData[modelName]) {
