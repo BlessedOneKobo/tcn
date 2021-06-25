@@ -7,10 +7,10 @@ export default {
     return {
       ws: null,
       transmissionData: {
-        power: "",
-        mvar: "",
-        voltage: "",
-        current: "",
+        power: null,
+        mvar: null,
+        voltage: null,
+        current: null,
       },
       transmissionUnit: Object.freeze({
         power: "mw",
@@ -19,26 +19,33 @@ export default {
         current: "amp",
       }),
       threshold: Object.freeze({
-        voltage: { min: 340, max: 350 },
+        voltage: Object.freeze({ min: 320, max: 350 }),
       }),
       msg: {
         text: "",
-        type: "error",
+        type: "",
       },
       timeout: null,
       reconnectInterval: null,
     };
   },
   computed: {
+    hasEmptyTransmissionValue() {
+      return Object.values(this.transmissionData).includes("");
+    },
     voltageDisplayClass() {
       const { voltage } = this.transmissionData;
       const { voltage: voltageThreshold } = this.threshold;
+
+      if (!voltage) {
+        return "";
+      }
 
       if (voltage > voltageThreshold.max || voltage < voltageThreshold.min) {
         return "error";
       }
 
-      return "";
+      return "success";
     },
     transmissionDataMessage() {
       return (property) => {
@@ -51,6 +58,20 @@ export default {
 
         return `${data}${unit}`;
       };
+    },
+  },
+  watch: {
+    hasEmptyTransmissionValue(newValue, oldValue) {
+      if (newValue) {
+        this.msg = {
+          text: "Error in connection",
+        };
+        return;
+      }
+
+      if (!newValue && oldValue) {
+        this.msg.text = "";
+      }
     },
   },
   methods: {
@@ -69,7 +90,6 @@ export default {
           this.timeoutFlag = true;
           this.msg = {
             text: "Connection lost",
-            type: "error",
           };
         }, 30000);
       };
@@ -133,7 +153,7 @@ export default {
     </p>
 
     <div class="container">
-      <div class="main-card">
+      <div class="main-card" :class="voltageDisplayClass">
         <div class="details-card">
           <div class="symbol">
             <img src="@/assets/watt.png" width="170" height="92" />
@@ -161,7 +181,7 @@ export default {
             <img src="@/assets/volt.png" width="170" height="92" />
           </div>
           <div class="detail">
-            <span class="detail-text" :class="voltageDisplayClass">
+            <span class="detail-text">
               {{ transmissionDataMessage("voltage") }}
             </span>
           </div>
@@ -230,6 +250,12 @@ export default {
   padding: 2em 1em;
   border-radius: 8px;
 }
+.main-card.error {
+  background-color: red;
+}
+.main-card.success {
+  background-color: green;
+}
 .details-card {
   display: flex;
   justify-content: space-between;
@@ -265,10 +291,10 @@ export default {
 .details-card .detail-text.active {
   transform: scale(1.125);
 }
-.details-card .detail-text.increase {
+.details-card .detail-text.success {
   color: green;
 }
-.details-card .detail-text.decrease {
+.details-card .detail-text.error {
   color: red;
 }
 
