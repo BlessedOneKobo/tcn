@@ -2,6 +2,7 @@
 import { SOCKET_ADDR, STORAGE_KEY } from "@/constants";
 import { RouteEnum } from "@/router";
 
+const ERROR_MESSAGE_INTERVAL = 30000;
 const transmissionUnit = Object.freeze({
   power: "mw",
   mvar: "mvar",
@@ -53,7 +54,7 @@ export default {
     transmissionDataMessage() {
       return (property) => {
         const data = this.transmissionData[property];
-        const unit = this.transmissionUnit[property];
+        const unit = transmissionUnit[property];
 
         if (!data) {
           return "Loading...";
@@ -88,7 +89,7 @@ export default {
           type: "error",
         };
         console.error("connected, but no data received");
-      }, 10000);
+      }, ERROR_MESSAGE_INTERVAL);
 
       this.ws.onmessage = (msg) => {
         if (timeoutFlag) {
@@ -104,7 +105,7 @@ export default {
             text: "Connection lost",
             type: "error",
           };
-        }, 30000);
+        }, ERROR_MESSAGE_INTERVAL);
       };
 
       this.ws.onerror = (e) => {
