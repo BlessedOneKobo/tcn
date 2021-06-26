@@ -155,6 +155,8 @@ export default {
 
     <div class="container">
       <div class="main-card" :class="voltageDisplayClass">
+        <div class="card-line input-line"></div>
+        <div class="card-line output-line"></div>
         <div class="details-card">
           <div class="symbol">
             <img src="@/assets/watt.png" width="170" height="92" />
@@ -250,12 +252,31 @@ export default {
   background-color: var(--dark-blue);
   padding: 2em 1em;
   border-radius: 8px;
+  position: relative;
 }
 .main-card.error {
   background-color: red;
 }
 .main-card.success {
   background-color: green;
+}
+.main-card.error .card-line {
+  border-color: red;
+}
+.main-card.success .card-line {
+  border-color: green;
+}
+.card-line {
+  width: 50%;
+  border: 6px solid #778495;
+  position: absolute;
+  top: 47%;
+}
+.input-line {
+  left: -50%;
+}
+.output-line {
+  left: 97%;
 }
 .details-card {
   display: flex;
@@ -311,7 +332,7 @@ export default {
     margin: 3em auto;
   }
   .main-card {
-    max-width: 75%;
+    max-width: 50%;
     margin: 0 auto;
   }
   .details-card {
