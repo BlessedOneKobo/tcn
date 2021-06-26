@@ -2,6 +2,20 @@
 import { SOCKET_ADDR, STORAGE_KEY } from "@/constants";
 import { RouteEnum } from "@/router";
 
+const transmissionUnit = Object.freeze({
+  power: "mw",
+  mvar: "mvar",
+  voltage: "kv",
+  current: "amp",
+});
+const threshold = Object.freeze({
+  voltage: Object.freeze({ min: 320, max: 350 }),
+});
+
+let timeout = null;
+let timeoutFlag = false;
+let reconnectInterval = null;
+
 export default {
   data() {
     return {
@@ -12,21 +26,10 @@ export default {
         voltage: null,
         current: null,
       },
-      transmissionUnit: Object.freeze({
-        power: "mw",
-        mvar: "mvar",
-        voltage: "kv",
-        current: "amp",
-      }),
-      threshold: Object.freeze({
-        voltage: Object.freeze({ min: 320, max: 350 }),
-      }),
       msg: {
         text: "",
         type: "",
       },
-      timeout: null,
-      reconnectInterval: null,
     };
   },
   computed: {
@@ -35,7 +38,7 @@ export default {
     },
     voltageDisplayClass() {
       const { voltage } = this.transmissionData;
-      const { voltage: voltageThreshold } = this.threshold;
+      const { voltage: voltageThreshold } = threshold;
 
       if (!voltage) {
         return "";
@@ -78,8 +81,8 @@ export default {
     connect() {
       this.ws = new WebSocket(SOCKET_ADDR);
 
-      this.timeout = setTimeout(() => {
-        this.timeoutFlag = true;
+      timeout = setTimeout(() => {
+        timeoutFlag = true;
         this.msg = {
           text: "No connection",
           type: "error",
@@ -88,15 +91,15 @@ export default {
       }, 10000);
 
       this.ws.onmessage = (msg) => {
-        if (this.timeoutFlag) {
+        if (timeoutFlag) {
           this.showConnectionMessage();
         }
 
-        clearTimeout(this.timeout);
+        clearTimeout(timeout);
         this.transmissionData = JSON.parse(msg.data);
 
-        this.timeout = setTimeout(() => {
-          this.timeoutFlag = true;
+        timeout = setTimeout(() => {
+          timeoutFlag = true;
           this.msg = {
             text: "Connection lost",
             type: "error",
@@ -110,22 +113,22 @@ export default {
 
       this.ws.onclose = (e) => {
         console.log("onclose", e);
-        this.reconnectInterval = setInterval(() => {
+        reconnectInterval = setInterval(() => {
           this.connect();
         }, 5000);
       };
 
       this.ws.onopen = (e) => {
         console.log("onopen", e);
-        clearInterval(this.reconnectInterval);
+        clearInterval(reconnectInterval);
 
-        if (this.timeoutFlag) {
+        if (timeoutFlag) {
           this.showConnectionMessage();
         }
       };
     },
     showConnectionMessage() {
-      this.timeoutFlag = false;
+      timeoutFlag = false;
       this.msg = {
         text: "Connected",
         type: "success",
