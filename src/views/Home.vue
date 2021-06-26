@@ -78,6 +78,15 @@ export default {
     connect() {
       this.ws = new WebSocket(SOCKET_ADDR);
 
+      this.timeout = setTimeout(() => {
+        this.timeoutFlag = true;
+        this.msg = {
+          text: "No connection",
+          type: "error",
+        };
+        console.error("connected, but no data received");
+      }, 10000);
+
       this.ws.onmessage = (msg) => {
         if (this.timeoutFlag) {
           this.showConnectionMessage();
