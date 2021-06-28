@@ -281,7 +281,7 @@ export default {
 }
 .card-line {
   width: 50%;
-  border: 6px solid #778495;
+  border: 2px solid #778495;
   position: absolute;
   top: 47%;
 }
