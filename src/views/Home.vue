@@ -2,6 +2,21 @@
 import { SOCKET_ADDR, STORAGE_KEY } from "@/constants";
 import { RouteEnum } from "@/router";
 
+const ERROR_MESSAGE_INTERVAL = 30000;
+const transmissionUnit = Object.freeze({
+  power: "mw",
+  mvar: "mvar",
+  voltage: "kv",
+  current: "amp",
+});
+const threshold = Object.freeze({
+  voltage: Object.freeze({ min: 320, max: 350 }),
+});
+
+let timeout = null;
+let timeoutFlag = false;
+let reconnectInterval = null;
+
 export default {
   data() {
     return {
@@ -12,21 +27,10 @@ export default {
         voltage: null,
         current: null,
       },
-      transmissionUnit: Object.freeze({
-        power: "mw",
-        mvar: "mvar",
-        voltage: "kv",
-        current: "amp",
-      }),
-      threshold: Object.freeze({
-        voltage: Object.freeze({ min: 320, max: 350 }),
-      }),
       msg: {
         text: "",
         type: "",
       },
-      timeout: null,
-      reconnectInterval: null,
     };
   },
   computed: {
@@ -35,7 +39,11 @@ export default {
     },
     voltageDisplayClass() {
       const { voltage } = this.transmissionData;
-      const { voltage: voltageThreshold } = this.threshold;
+      const { voltage: voltageThreshold } = threshold;
+
+      if (!voltage) {
+        return "";
+      }
 
       if (!voltage) {
         return "";
@@ -50,7 +58,7 @@ export default {
     transmissionDataMessage() {
       return (property) => {
         const data = this.transmissionData[property];
-        const unit = this.transmissionUnit[property];
+        const unit = transmissionUnit[property];
 
         if (!data) {
           return "Loading...";
@@ -78,20 +86,29 @@ export default {
     connect() {
       this.ws = new WebSocket(SOCKET_ADDR);
 
+      timeout = setTimeout(() => {
+        timeoutFlag = true;
+        this.msg = {
+          text: "No connection",
+          type: "error",
+        };
+        console.error("connected, but no data received");
+      }, ERROR_MESSAGE_INTERVAL);
+
       this.ws.onmessage = (msg) => {
-        if (this.timeoutFlag) {
+        if (timeoutFlag) {
           this.showConnectionMessage();
         }
 
-        clearTimeout(this.timeout);
+        clearTimeout(timeout);
         this.transmissionData = JSON.parse(msg.data);
 
-        this.timeout = setTimeout(() => {
-          this.timeoutFlag = true;
+        timeout = setTimeout(() => {
+          timeoutFlag = true;
           this.msg = {
             text: "Connection lost",
           };
-        }, 30000);
+        }, ERROR_MESSAGE_INTERVAL);
       };
 
       this.ws.onerror = (e) => {
@@ -100,22 +117,22 @@ export default {
 
       this.ws.onclose = (e) => {
         console.log("onclose", e);
-        this.reconnectInterval = setInterval(() => {
+        reconnectInterval = setInterval(() => {
           this.connect();
         }, 5000);
       };
 
       this.ws.onopen = (e) => {
         console.log("onopen", e);
-        clearInterval(this.reconnectInterval);
+        clearInterval(reconnectInterval);
 
-        if (this.timeoutFlag) {
+        if (timeoutFlag) {
           this.showConnectionMessage();
         }
       };
     },
     showConnectionMessage() {
-      this.timeoutFlag = false;
+      timeoutFlag = false;
       this.msg = {
         text: "Connected",
         type: "success",
@@ -154,6 +171,8 @@ export default {
 
     <div class="container">
       <div class="main-card" :class="voltageDisplayClass">
+        <div class="card-line input-line"></div>
+        <div class="card-line output-line"></div>
         <div class="details-card">
           <div class="symbol">
             <img src="@/assets/watt.png" width="170" height="92" />
@@ -249,6 +268,31 @@ export default {
   background-color: var(--dark-blue);
   padding: 2em 1em;
   border-radius: 8px;
+  position: relative;
+}
+.main-card.error {
+  background-color: red;
+}
+.main-card.success {
+  background-color: green;
+}
+.main-card.error .card-line {
+  border-color: red;
+}
+.main-card.success .card-line {
+  border-color: green;
+}
+.card-line {
+  width: 50%;
+  border: 2px solid #778495;
+  position: absolute;
+  top: 47%;
+}
+.input-line {
+  left: -50%;
+}
+.output-line {
+  left: 97%;
 }
 .main-card.error {
   background-color: red;
@@ -310,7 +354,7 @@ export default {
     margin: 3em auto;
   }
   .main-card {
-    max-width: 75%;
+    max-width: 50%;
     margin: 0 auto;
   }
   .details-card {
