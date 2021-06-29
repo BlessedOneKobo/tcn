@@ -184,7 +184,7 @@ export default {
 <template>
   <div>
     <div class="navigation">
-      <h2 class="description">Ugwuaji 330 kva power line</h2>
+      <h2 class="description">Oke Aro/Ikeja West 330kV line1</h2>
       <div class="logout-section">
         <button @click="logOut">Log out</button>
       </div>
