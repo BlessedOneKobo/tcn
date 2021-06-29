@@ -1,5 +1,6 @@
 <script>
 import { SOCKET_ADDR, STORAGE_KEY } from "@/constants";
+import Decimal from "decimal.js";
 import { RouteEnum } from "@/router";
 
 const ERROR_MESSAGE_INTERVAL = 30000;
@@ -12,10 +13,35 @@ const transmissionUnit = Object.freeze({
 const threshold = Object.freeze({
   voltage: Object.freeze({ min: 320, max: 350 }),
 });
+const valueDP = Object.freeze({
+  power: 2,
+  mvar: 2,
+  voltage: 0,
+  current: 0,
+});
+const valueDiv = Object.freeze({
+  power: 1000,
+  mvar: 1000,
+  voltage: 1000,
+  current: 1,
+});
 
 let timeout = null;
 let timeoutFlag = false;
 let reconnectInterval = null;
+
+function processData(data) {
+  const processed = data;
+
+  Object.keys(processed).forEach((key) => {
+    processed[key] = Decimal(processed[key])
+      .abs()
+      .div(valueDiv[key])
+      .toDP(valueDP[key]);
+  });
+
+  return processed;
+}
 
 export default {
   data() {
@@ -45,7 +71,10 @@ export default {
         return "";
       }
 
-      if (voltage > voltageThreshold.max || voltage < voltageThreshold.min) {
+      if (
+        voltage.gt(voltageThreshold.max) ||
+        voltage.lt(voltageThreshold.min)
+      ) {
         return "error";
       }
 
@@ -97,7 +126,7 @@ export default {
         }
 
         clearTimeout(timeout);
-        this.transmissionData = JSON.parse(msg.data);
+        this.transmissionData = processData(JSON.parse(msg.data));
 
         timeout = setTimeout(() => {
           timeoutFlag = true;
