@@ -2,17 +2,9 @@
 import { SOCKET_ADDR, STORAGE_KEY } from "@/constants";
 import Decimal from "decimal.js";
 import { RouteEnum } from "@/router";
+import TransmissionCard from "../components/TransmissionCard.vue";
 
 const ERROR_MESSAGE_INTERVAL = 30000;
-const transmissionUnit = Object.freeze({
-  power: "mw",
-  mvar: "mvar",
-  voltage: "kv",
-  current: "amp",
-});
-const threshold = Object.freeze({
-  voltage: Object.freeze({ min: 320, max: 350 }),
-});
 const valueDP = Object.freeze({
   power: 2,
   mvar: 2,
@@ -44,6 +36,9 @@ function processData(data) {
 }
 
 export default {
+  components: {
+    TransmissionCard,
+  },
   data() {
     return {
       ws: null,
@@ -62,35 +57,6 @@ export default {
   computed: {
     hasEmptyTransmissionValue() {
       return Object.values(this.transmissionData).includes("");
-    },
-    voltageDisplayClass() {
-      const { voltage } = this.transmissionData;
-      const { voltage: voltageThreshold } = threshold;
-
-      if (!voltage) {
-        return "";
-      }
-
-      if (
-        voltage.gt(voltageThreshold.max) ||
-        voltage.lt(voltageThreshold.min)
-      ) {
-        return "error";
-      }
-
-      return "success";
-    },
-    transmissionDataMessage() {
-      return (property) => {
-        const data = this.transmissionData[property];
-        const unit = transmissionUnit[property];
-
-        if (!data) {
-          return "Loading...";
-        }
-
-        return `${data}${unit}`;
-      };
     },
   },
   watch: {
@@ -188,71 +154,33 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div class="navigation">
+  <div class="container">
+    <img src="@/assets/grid.svg" class="overlay" />
+    <!-- <div class="navigation">
       <h2 class="description">Oke Aro/Ikeja West 330kV line1</h2>
       <div class="logout-section">
         <button @click="logOut">Log out</button>
       </div>
-    </div>
+    </div> -->
 
-    <p v-if="msg.text" class="general" :class="msg.type">
+    <!-- <p v-if="msg.text" class="general" :class="msg.type">
       {{ msg.text }}
-    </p>
+    </p> -->
 
-    <div class="container">
-      <div class="main-card" :class="voltageDisplayClass">
-        <div class="card-line input-line"></div>
-        <div class="card-line output-line"></div>
-        <div class="details-card">
-          <div class="symbol">
-            <img src="@/assets/watt.png" width="170" height="92" />
-          </div>
-          <div class="detail">
-            <span class="detail-text">
-              {{ transmissionDataMessage("power") }}
-            </span>
-          </div>
-        </div>
-
-        <div class="details-card">
-          <div class="symbol">
-            <img src="@/assets/amp.png" width="170" height="92" />
-          </div>
-          <div class="detail">
-            <span class="detail-text">
-              {{ transmissionDataMessage("current") }}
-            </span>
-          </div>
-        </div>
-
-        <div class="details-card">
-          <div class="symbol">
-            <img src="@/assets/volt.png" width="170" height="92" />
-          </div>
-          <div class="detail">
-            <span class="detail-text">
-              {{ transmissionDataMessage("voltage") }}
-            </span>
-          </div>
-        </div>
-
-        <div class="details-card">
-          <div class="symbol">
-            <img src="@/assets/reactive.png" width="170" height="92" />
-          </div>
-          <div class="detail">
-            <span class="detail-text">
-              {{ transmissionDataMessage("mvar") }}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- <div class="container"> -->
+    <TransmissionCard v-bind="{ transmissionData }" />
+    <!-- </div> -->
   </div>
 </template>
 
 <style scoped>
+.container {
+  position: relative;
+}
+.overlay {
+  width: 3800px;
+  display: block;
+}
 .navigation {
   background-color: var(--dark-blue);
   color: #fff;
@@ -295,109 +223,11 @@ export default {
 .general.success {
   color: #0f7f0f;
 }
-.main-card {
-  background-color: var(--dark-blue);
-  padding: 2em 1em;
-  border-radius: 8px;
-  position: relative;
-}
-.main-card.error {
-  background-color: red;
-}
-.main-card.success {
-  background-color: green;
-}
-.main-card.error .card-line {
-  border-color: red;
-}
-.main-card.success .card-line {
-  border-color: green;
-}
-.card-line {
-  width: 50%;
-  border: 2px solid #778495;
-  position: absolute;
-  top: 47%;
-}
-.input-line {
-  left: -50%;
-}
-.output-line {
-  left: 97%;
-}
-.main-card.error {
-  background-color: red;
-}
-.main-card.success {
-  background-color: green;
-}
-.details-card {
-  display: flex;
-  justify-content: space-between;
-}
-.details-card.error {
-  color: red;
-}
-.details-card:not(:last-of-type) {
-  margin-bottom: 1.5em;
-}
-.details-card .symbol {
-  flex: 0 1 25%;
-}
-.details-card .symbol img {
-  width: 100%;
-  height: auto;
-  display: flex;
-  align-items: stretch;
-}
-.details-card .detail {
-  flex: 0 1 65%;
-  background-color: #fff;
-  min-height: 2em;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 1em;
-  font-weight: bold;
-}
-.details-card .detail-text {
-  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-.details-card .detail-text.active {
-  transform: scale(1.125);
-}
-.details-card .detail-text.success {
-  color: green;
-}
-.details-card .detail-text.error {
-  color: red;
-}
-
-@media (min-width: 425px) {
-  .details-card .detail-text {
-    font-size: 1.5em;
-  }
-}
 
 @media (min-width: 768px) {
   .container {
     max-width: 60%;
     margin: 3em auto;
-  }
-  .main-card {
-    max-width: 50%;
-    margin: 0 auto;
-  }
-  .details-card {
-    justify-content: flex-start;
-    align-items: center;
-  }
-  .details-card .detail {
-    max-height: 2em;
-    font-weight: bold;
-    font-size: 0.75em;
-    padding: 1em;
-    margin-left: 1em;
   }
 }
 
