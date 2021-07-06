@@ -66,7 +66,10 @@ export default {
       return Object.values(this.transmissionData).includes("");
     },
     arrowDisplayClass() {
-      return this.voltageDisplayClass === "success" ? "success" : "";
+      const {
+        voltage: { initialValue: voltageValue },
+      } = this.transmissionData;
+      return voltageValue > 0 ? "success" : "";
     },
     outArrowClass() {
       const {
