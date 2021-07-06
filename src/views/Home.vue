@@ -108,7 +108,7 @@ export default {
     },
   },
   methods: {
-    connect() {
+    connect(reconnect = false) {
       this.ws = new WebSocket(SOCKET_ADDR);
 
       timeout = setTimeout(() => {
@@ -138,12 +138,14 @@ export default {
 
       this.ws.onerror = (e) => {
         console.log("onerror", e);
+        return;
       };
 
       this.ws.onclose = (e) => {
         console.log("onclose", e);
+        clearInterval(reconnectInterval);
         reconnectInterval = setInterval(() => {
-          this.connect();
+          this.connect(true);
         }, 5000);
       };
 
@@ -153,6 +155,10 @@ export default {
 
         if (timeoutFlag) {
           this.showConnectionMessage();
+        }
+
+        if (reconnect) {
+          return;
         }
       };
     },
