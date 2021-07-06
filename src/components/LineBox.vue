@@ -1,58 +1,55 @@
- /* eslint-disable */
 <template>
-    <div class="main-card" :class="voltageDisplayClass">
-                            <b style="font-size: 16px;">{{name}}</b>
-                            <div class="details-card">
-                                <div class="symbol">
-                                    <img src="@/assets/watt.png" width="170" height="92" />
-                                </div>
-                                <div class="detail">
-                                    <span class="detail-text">
-                                        {{ transmissionDataMessage("power") }}
-                                    </span>
-                                </div>
-                            </div>
-                    
-                            <div class="details-card">
-                                <div class="symbol">
-                                    <img src="@/assets/amp.png" width="170" height="92" />
-                                </div>
-                                <div class="detail">
-                                    <span class="detail-text">
-                                        {{ transmissionDataMessage("current") }}
-                                    </span>
-                                </div>
-                            </div>
-                    
-                            <div class="details-card">
-                                <div class="symbol">
-                                    <img src="@/assets/volt.png" width="170" height="92" />
-                                </div>
-                                <div class="detail">
-                                    <span class="detail-text">
-                                        {{ transmissionDataMessage("voltage") }}
-                                    </span>
-                                </div>
-                            </div>
-                    
-                            <div class="details-card">
-                                <div class="symbol">
-                                    <img src="@/assets/reactive.png" width="170" height="92" />
-                                </div>
-                                <div class="detail">
-                                    <span class="detail-text">
-                                        {{ transmissionDataMessage("mvar") }}
-                                    </span>
-                                </div>
-                            </div>
-                            
-                        </div>
+  <div class="main-card" :class="voltageDisplayClass">
+    <b style="font-size: 16px">{{ name }}</b>
+    <div class="details-card">
+      <div class="symbol">
+        <img src="@/assets/watt.png" width="170" height="92" />
+      </div>
+      <div class="detail">
+        <span class="detail-text">
+          {{ transmissionDataMessage("power") }}
+        </span>
+      </div>
+    </div>
 
-                        
+    <div class="details-card">
+      <div class="symbol">
+        <img src="@/assets/amp.png" width="170" height="92" />
+      </div>
+      <div class="detail">
+        <span class="detail-text">
+          {{ transmissionDataMessage("current") }}
+        </span>
+      </div>
+    </div>
+
+    <div class="details-card">
+      <div class="symbol">
+        <img src="@/assets/volt.png" width="170" height="92" />
+      </div>
+      <div class="detail">
+        <span class="detail-text">
+          {{ transmissionDataMessage("voltage") }}
+        </span>
+      </div>
+    </div>
+
+    <div class="details-card">
+      <div class="symbol">
+        <img src="@/assets/reactive.png" width="170" height="92" />
+      </div>
+      <div class="detail">
+        <span class="detail-text">
+          {{ transmissionDataMessage("mvar") }}
+        </span>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-//const ERROR_MESSAGE_INTERVAL = 30000;
+import voltageDisplayMixin from "@/mixins/voltage-display-mixin";
+
 const transmissionUnit = Object.freeze({
   power: "mw",
   mvar: "mvar",
@@ -60,93 +57,50 @@ const transmissionUnit = Object.freeze({
   current: "amp",
 });
 
-const threshold = Object.freeze({
-  voltage: Object.freeze({ min: 320, max: 350 }),
-});
-/*
-const valueDP = Object.freeze({
-  power: 2,
-  mvar: 2,
-  voltage: 0,
-  current: 0,
-});
-const valueDiv = Object.freeze({
-  power: 1000,
-  mvar: 1000,
-  voltage: 1000,
-  current: 1,
-});
-*/
 export default {
-    name: 'LineBox',
-    props: [ 'name', 'transmissionData' ],
-    created: function() {
-        
+  name: "LineBox",
+  props: ["name", "transmissionData"],
+  mixins: [voltageDisplayMixin],
+  computed: {
+    hasEmptyTransmissionValue() {
+      return Object.values(this.transmissionData).includes("");
     },
-    computed: {
-        hasEmptyTransmissionValue() {
-            return Object.values(this.transmissionData).includes("");
-        },
-        voltageDisplayClass() {
-            const { voltage } = this.transmissionData;
-            const { voltage: voltageThreshold } = threshold;
+    transmissionDataMessage() {
+      return (property) => {
+        const { absValue: data } = this.transmissionData[property];
+        const unit = transmissionUnit[property];
 
-            if (!voltage) {
-                return "";
-            }
-
-            if (
-                voltage.gt(voltageThreshold.max) ||
-                voltage.lt(voltageThreshold.min)
-            ) {
-                return "error";
-            }
-
-            return "success";
-        },
-        transmissionDataMessage() {
-            return (property) => {
-                const data = this.transmissionData[property];
-                const unit = transmissionUnit[property];
-
-                if (!data) {
-                return "Loading...";
-                }
-
-                return `${data}${unit}`;
-            };
-        },
-    },
-    watch: {
-        hasEmptyTransmissionValue(newValue, oldValue) {
-            if (newValue) {
-                this.msg = {
-                text: "Error in connection",
-                };
-                return;
-            }
-
-            if (!newValue && oldValue) {
-                this.msg.text = "";
-            }
-        },
-    },
-    filters: {
-        //
-    },
-    data() {
-        return {
-            msg: {
-                text: "",
-                type: "",
-            },
+        if (!data) {
+          return "Loading...";
         }
-    }, 
-    methods: {
-        //
+
+        return `${data}${unit}`;
+      };
     },
-  
-}
+  },
+  watch: {
+    hasEmptyTransmissionValue(newValue, oldValue) {
+      if (newValue) {
+        this.msg = {
+          text: "Error in connection",
+        };
+        return;
+      }
+
+      if (!newValue && oldValue) {
+        this.msg.text = "";
+      }
+    },
+  },
+  data() {
+    return {
+      msg: {
+        text: "",
+        type: "",
+      },
+    };
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

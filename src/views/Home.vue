@@ -3,17 +3,9 @@ import { SOCKET_ADDR, STORAGE_KEY } from "@/constants";
 import Decimal from "decimal.js";
 import { RouteEnum } from "@/router";
 import LineBox from "@/components/LineBox";
+import voltageDisplayMixin from "@/mixins/voltage-display-mixin";
 
 const ERROR_MESSAGE_INTERVAL = 30000;
-const transmissionUnit = Object.freeze({
-  power: "mw",
-  mvar: "mvar",
-  voltage: "kv",
-  current: "amp",
-});
-const threshold = Object.freeze({
-  voltage: Object.freeze({ min: 320, max: 350 }),
-});
 const valueDP = Object.freeze({
   power: 2,
   mvar: 2,
@@ -35,10 +27,11 @@ function processData(data) {
   const processed = data;
 
   Object.keys(processed).forEach((key) => {
-    processed[key] = Decimal(processed[key])
-      .abs()
+    const initialValue = Decimal(processed[key])
       .div(valueDiv[key])
       .toDP(valueDP[key]);
+    const absValue = initialValue.abs();
+    processed[key] = { initialValue, absValue };
   });
 
   return processed;
@@ -46,20 +39,21 @@ function processData(data) {
 
 export default {
   components: { LineBox },
+  mixins: [voltageDisplayMixin],
   data() {
     return {
       ws: null,
       transmissionData: {
-        power: null,
-        mvar: null,
-        voltage: null,
-        current: null,
+        power: { initialValue: null, absValue: null },
+        mvar: { initialValue: null, absValue: null },
+        voltage: { initialValue: null, absValue: null },
+        current: { initialValue: null, absValue: null },
       },
       defaultTransmissionData: {
-        power: null,
-        mvar: null,
-        voltage: null,
-        current: null,
+        power: { initialValue: null, absValue: null },
+        mvar: { initialValue: null, absValue: null },
+        voltage: { initialValue: null, absValue: null },
+        current: { initialValue: null, absValue: null },
       },
       msg: {
         text: "",
@@ -71,34 +65,30 @@ export default {
     hasEmptyTransmissionValue() {
       return Object.values(this.transmissionData).includes("");
     },
-    voltageDisplayClass() {
-      const { voltage } = this.transmissionData;
-      const { voltage: voltageThreshold } = threshold;
+    arrowDisplayClass() {
+      return this.voltageDisplayClass === "success" ? "success" : "";
+    },
+    outArrowClass() {
+      const {
+        power: { initialValue: voltageInitialValue },
+      } = this.transmissionData;
 
-      if (!voltage) {
+      if (!voltageInitialValue) {
         return "";
       }
 
-      if (
-        voltage.gt(voltageThreshold.max) ||
-        voltage.lt(voltageThreshold.min)
-      ) {
-        return "error";
+      return voltageInitialValue > 0 ? "fa-angle-left" : "fa-angle-right";
+    },
+    inArrowClass() {
+      const {
+        power: { initialValue: voltageInitialValue },
+      } = this.transmissionData;
+
+      if (!voltageInitialValue) {
+        return "";
       }
 
-      return "success";
-    },
-    transmissionDataMessage() {
-      return (property) => {
-        const data = this.transmissionData[property];
-        const unit = transmissionUnit[property];
-
-        if (!data) {
-          return "Loading...";
-        }
-
-        return `${data}${unit}`;
-      };
+      return voltageInitialValue > 0 ? "fa-angle-down" : "fa-angle-up";
     },
   },
   watch: {
@@ -241,8 +231,12 @@ export default {
             <LineBox name="K8W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <span id="ikejaW-k8w-v"
-            ><i id="ikejaW-k8w-v-arrow-up" class="fas fa-angle-up"></i
+          <span id="ikejaW-k8w-v" :class="arrowDisplayClass"
+            ><i
+              id="ikejaW-k8w-v-arrow-up"
+              class="fas"
+              :class="[inArrowClass, arrowDisplayClass]"
+            ></i
           ></span>
 
           <div id="ikejaW-k7w">
@@ -264,8 +258,12 @@ export default {
             <LineBox name="K8W" :transmissionData="transmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <hr id="okearo-k8w-h" />
-          <i id="okearo-k8w-v-arrow-right" class="fas fa-angle-right"></i>
+          <hr id="okearo-k8w-h" :class="arrowDisplayClass" />
+          <i
+            id="okearo-k8w-v-arrow-right"
+            class="fas"
+            :class="[outArrowClass, arrowDisplayClass]"
+          ></i>
 
           <div id="okearo-k7w">
             <!--line box content starts -->
@@ -332,6 +330,13 @@ export default {
 </template>
 
 <style scoped>
+hr {
+  border-color: #000;
+}
+hr.success,
+#ikeja-west #ikejaW-k8w-v.success {
+  border-color: green;
+}
 .navigation {
   background-color: var(--dark-blue);
   color: #fff;
@@ -368,9 +373,11 @@ export default {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+.fas.error,
 .general.error {
   color: #f00;
 }
+.fas.success,
 .general.success {
   color: #0f7f0f;
 }
