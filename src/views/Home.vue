@@ -1,9 +1,8 @@
- /* eslint-disable */
 <script>
 import { SOCKET_ADDR, STORAGE_KEY } from "@/constants";
 import Decimal from "decimal.js";
 import { RouteEnum } from "@/router";
-import LineBox from '@/components/LineBox';
+import LineBox from "@/components/LineBox";
 
 const ERROR_MESSAGE_INTERVAL = 30000;
 const transmissionUnit = Object.freeze({
@@ -117,7 +116,7 @@ export default {
     },
   },
   methods: {
-    connect() {
+    connect(reconnect = false) {
       this.ws = new WebSocket(SOCKET_ADDR);
 
       timeout = setTimeout(() => {
@@ -147,13 +146,16 @@ export default {
 
       this.ws.onerror = (e) => {
         console.log("onerror", e);
+        return;
       };
 
       this.ws.onclose = (e) => {
         console.log("onclose", e);
+        clearInterval(reconnectInterval);
         reconnectInterval = setInterval(() => {
-          this.connect();
+          this.connect(true);
         }, 5000);
+        return;
       };
 
       this.ws.onopen = (e) => {
@@ -162,6 +164,10 @@ export default {
 
         if (timeoutFlag) {
           this.showConnectionMessage();
+        }
+
+        if (reconnect) {
+          return;
         }
       };
     },
@@ -192,144 +198,136 @@ export default {
 
 <template>
   <div>
-
     <p v-if="msg.text" class="general" :class="msg.type">
       {{ msg.text }}
     </p>
 
     <div id="grid-container">
-            <div id="col1">
-                <div id="ikeja-west">
-                    <b style="font-size:18px">IKEJA-WEST TS</b>
-                    <div id="ikejaW-nw1">
-                        <!--line box content starts -->
-                        <LineBox name="NW1" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <div id="ikejaW-r1w">
-                        <!--line box content starts -->
-                        <LineBox name="R1W" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div> 
-                    <div id="ikejaW-h1w">
-                        <!--line box content starts -->
-                        <LineBox name="H1W" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div> 
-                    <div id="ikejaW-m5w">
-                        <!--line box content starts -->
-                        <LineBox name="M5W" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <div id="ikejaW-w3l">
-                        <!--line box content starts -->
-                        <LineBox name="W3L" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <div id="ikejaW-w4l">
-                        <!--line box content starts -->
-                        <LineBox name="W4L" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <div id="ikejaW-k8w">
-                        <!--line box content starts -->
-                        <LineBox name="K8W" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <span id="ikejaW-k8w-v"><i id="ikejaW-k8w-v-arrow-up" class="fas fa-angle-up"></i></span>
+      <div id="col1">
+        <div id="ikeja-west">
+          <b style="font-size: 18px">IKEJA-WEST TS</b>
+          <div id="ikejaW-nw1">
+            <!--line box content starts -->
+            <LineBox name="NW1" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <div id="ikejaW-r1w">
+            <!--line box content starts -->
+            <LineBox name="R1W" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <div id="ikejaW-h1w">
+            <!--line box content starts -->
+            <LineBox name="H1W" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <div id="ikejaW-m5w">
+            <!--line box content starts -->
+            <LineBox name="M5W" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <div id="ikejaW-w3l">
+            <!--line box content starts -->
+            <LineBox name="W3L" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <div id="ikejaW-w4l">
+            <!--line box content starts -->
+            <LineBox name="W4L" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <div id="ikejaW-k8w">
+            <!--line box content starts -->
+            <LineBox name="K8W" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <span id="ikejaW-k8w-v"
+            ><i id="ikejaW-k8w-v-arrow-up" class="fas fa-angle-up"></i
+          ></span>
 
-                    <div id="ikejaW-k7w">
-                        <!--line box content starts -->
-                        <LineBox name="K7W" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div> 
-                    <span id="ikejaW-k7w-v"></span>
+          <div id="ikejaW-k7w">
+            <!--line box content starts -->
+            <LineBox name="K7W" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <span id="ikejaW-k7w-v"></span>
 
-                    <div id="ikejaW-n6w">
-                        <!--line box content starts -->
-                        <LineBox name="N6W" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-
-                </div>
-                <div id="okearo">
-                    <div id="okearo-k8w">
-                        <!--line box content starts -->
-                        <LineBox name="K8W" :transmissionData='transmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <hr id="okearo-k8w-h" />
-                    <i id="okearo-k8w-v-arrow-right" class="fas fa-angle-right"></i> 
-                   
-                    <div id="okearo-k7w">
-                        <!--line box content starts -->
-                        <LineBox name="K7W" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <hr id="okearo-k7w-h" />
-
-                    <div id="okearo-n8k">
-                        <!--line box content starts -->
-                        <LineBox name="N8K" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <hr id="okearo-n8k-h" />
-
-                    <div id="okearo-n7k">
-                        <!--line box content starts -->
-                        <LineBox name="N7K" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <hr id="okearo-n7k-h" />
-
-                </div>
-
-
-
-
-
-                <div id="egbin">
-                    <div id="egbin-n7k">
-                        <!--line box content starts -->
-                        <LineBox name="N7K" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <span id="egbin-n7k-v"></span>
-
-                    <div id="egbin-n8k">
-                        <!--line box content starts -->
-                        <LineBox name="N8K" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <span id="egbin-n8k-v"></span>
-
-                    <div id="egbin-n6w">
-                        <!--line box content starts -->
-                        <LineBox name="N6W" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <div id="egbin-b6n">
-                        <!--line box content starts -->
-                        <LineBox name="B6N" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-
-                    <div id="egbin-n3j">
-                        <!--line box content starts -->
-                        <LineBox name="N3J" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-                    <div id="egbin-n4j">
-                        <!--line box content starts -->
-                        <LineBox name="N4J" :transmissionData='defaultTransmissionData' />
-                        <!-- Line Box content ends -->
-                    </div>
-
-                </div>
-
-                
-            </div>
+          <div id="ikejaW-n6w">
+            <!--line box content starts -->
+            <LineBox name="N6W" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
         </div>
+        <div id="okearo">
+          <div id="okearo-k8w">
+            <!--line box content starts -->
+            <LineBox name="K8W" :transmissionData="transmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <hr id="okearo-k8w-h" />
+          <i id="okearo-k8w-v-arrow-right" class="fas fa-angle-right"></i>
+
+          <div id="okearo-k7w">
+            <!--line box content starts -->
+            <LineBox name="K7W" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <hr id="okearo-k7w-h" />
+
+          <div id="okearo-n8k">
+            <!--line box content starts -->
+            <LineBox name="N8K" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <hr id="okearo-n8k-h" />
+
+          <div id="okearo-n7k">
+            <!--line box content starts -->
+            <LineBox name="N7K" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <hr id="okearo-n7k-h" />
+        </div>
+
+        <div id="egbin">
+          <div id="egbin-n7k">
+            <!--line box content starts -->
+            <LineBox name="N7K" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <span id="egbin-n7k-v"></span>
+
+          <div id="egbin-n8k">
+            <!--line box content starts -->
+            <LineBox name="N8K" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <span id="egbin-n8k-v"></span>
+
+          <div id="egbin-n6w">
+            <!--line box content starts -->
+            <LineBox name="N6W" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <div id="egbin-b6n">
+            <!--line box content starts -->
+            <LineBox name="B6N" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+
+          <div id="egbin-n3j">
+            <!--line box content starts -->
+            <LineBox name="N3J" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <div id="egbin-n4j">
+            <!--line box content starts -->
+            <LineBox name="N4J" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -455,6 +453,4 @@ export default {
 .details-card .detail-text.error {
   color: red;
 }
-
-
 </style>
