@@ -1,0 +1,258 @@
+$lineBoxWidth: 250px;
+$lineBoxHeight: 250px;
+$hLineBoxSpacing: 40px;
+$vLineBoxSpacing: 40px;
+$hStationBoxSpacing: 50px;
+$vStationBoxSpacing: 50px;
+
+@function stationWidth($lines) {
+    @return ($lines * $lineBoxWidth) + ($lines+1)*$hLineBoxSpacing;
+}
+
+@function stationHeight($lines) {
+    @return ($lines * $lineBoxHeight) + ($lines+1)*$vLineBoxSpacing;
+}
+@function lineBoxTop($row, $col) {
+    @return ($row - 1) + ($vLineBoxSpacing * $row) + ($row - 1)*$lineBoxHeight;
+}
+@function lineBoxLeft($row, $col) {
+    @return ($col - 1) + ($hLineBoxSpacing * $col) + ($col - 1)*$lineBoxWidth;
+}
+@function vLineHeight($lines) {
+    @return ($vLineBoxSpacing * ($lines + 1)) + $vStationBoxSpacing + (($lines - 1)*$lineBoxHeight) + ($lineBoxHeight/2) + (1 + ($lines * 2));
+}
+@function hLineWidth($lines) {
+    @return ($hLineBoxSpacing * ($lines + 1)) + $hStationBoxSpacing + (($lines - 1)*$lineBoxWidth) + ($lineBoxWidth/2);
+}
+
+@mixin station {
+    position: absolute;
+    border: medium solid #000;
+}
+@mixin line {
+    position: absolute;
+    border: thin solid #000;
+    width: $lineBoxWidth;
+    height: $lineBoxHeight;
+}
+@mixin lineBoxPosition($row, $col) {
+    top: lineBoxTop($row, $col);
+    left: lineBoxLeft($row, $col);
+}
+@mixin hLine($top, $left, $height) {
+    top: $top + ($height/2);
+    left: $left + $lineBoxWidth;
+}
+@mixin vDownLine($top, $left, $height) {
+    bottom: $top - $vLineBoxSpacing - 3;
+    left: $left + ($lineBoxWidth/2);
+}
+@mixin vLine($top, $left, $height) {
+    top: $top + $height + 3;
+    left: $left + ($lineBoxWidth/2);
+}
+@mixin hr {
+    position: absolute;
+}
+@mixin vSpan {
+    position: absolute;
+    border: thin solid #000;
+}
+@mixin vArrow($height) {
+    position: absolute;
+    top: $height/2;
+    left: -5px;
+}
+
+@mixin hArrow($width) {
+    position: absolute;
+    left: $lineBoxWidth + $width/2;
+}
+
+$okearoWidth: stationWidth(1);
+$okearoHeight: stationHeight(4);
+$ikeja-westWidth: stationWidth(4);
+$ikeja-westHeight: stationHeight(4);
+
+#ikeja-west{
+    @include station();
+
+    left: ($hStationBoxSpacing*2) + $okearoWidth;
+    top: $vStationBoxSpacing;
+    width: $ikeja-westWidth;
+    height: $ikeja-westHeight;
+    #ikejaW-nw1{
+        @include line();
+        @include lineBoxPosition(1, 1);
+    }
+    #ikejaW-r1w{
+        @include line();
+        @include lineBoxPosition(1, 2);
+    }
+    #ikejaW-h1w{
+        @include line();
+        @include lineBoxPosition(1, 3);
+    }
+    #ikejaW-m5w{
+        @include line();
+        @include lineBoxPosition(1, 4);
+    }
+    #ikejaW-w3l{
+        @include line();
+        @include lineBoxPosition(2, 1);
+    }
+    #ikejaW-w4l{
+        @include line();
+        @include lineBoxPosition(3, 1);
+    }
+    #ikejaW-k8w{
+        @include line();
+        @include lineBoxPosition(4, 1);
+    }
+    #ikejaW-k7w{
+        @include line();
+        @include lineBoxPosition(4, 2);
+    }
+    #ikejaW-n6w{
+        @include line();
+        @include lineBoxPosition(4, 3);
+    }
+
+    #ikejaW-k8w-v{
+        @include vLine(lineBoxTop(4,1), lineBoxLeft(4,1), $lineBoxHeight);
+        @include vSpan();
+    
+        height: vLineHeight(1);
+
+        #ikejaW-k8w-v-arrow-down{
+            @include vArrow(vLineHeight(1));
+        }
+        #ikejaW-k8w-v-arrow-up{
+            @include vArrow(vLineHeight(1));
+        }
+    }
+
+    #ikejaW-k7w-v{
+        @include vLine(lineBoxTop(4,2), lineBoxLeft(4,2), $lineBoxHeight);
+        @include vSpan();
+    
+        height: vLineHeight(2);
+    }
+}
+
+$okearoTop: ($vStationBoxSpacing*2) + $ikeja-westHeight;
+#okearo{
+    @include station();
+    
+    top: $okearoTop;
+    left: $hStationBoxSpacing;
+    width: $okearoWidth;
+    height: $okearoHeight;
+    #okearo-k8w{
+        @include line();
+        @include lineBoxPosition(1, 1);
+    }
+    #okearo-k7w{
+        @include line();
+        @include lineBoxPosition(2, 1);
+    }
+    #okearo-n8k{
+        @include line();
+        @include lineBoxPosition(3, 1);
+    }
+    #okearo-n7k{
+        @include line();
+        @include lineBoxPosition(4, 1);
+    }
+
+    #okearo-k8w-h{
+        @include hLine(lineBoxTop(1,1), lineBoxLeft(1,1), $lineBoxHeight);
+        @include hr();
+    
+        width: hLineWidth(1);
+    }
+    #okearo-k8w-v-arrow-right{
+        @include hArrow(hLineWidth(1));
+
+        top: lineBoxTop(1,1) + $lineBoxHeight/2;
+    }
+    #okearo-k8w-v-arrow-left{
+        @include hArrow(hLineWidth(1));
+    }
+
+    #okearo-k7w-h{
+        @include hLine(lineBoxTop(2,1), lineBoxLeft(2,1), $lineBoxHeight);
+        @include hr();
+    
+        width: hLineWidth(2);
+    }
+
+    #okearo-n8k-h{
+        @include hLine(lineBoxTop(3,1), lineBoxLeft(3,1), $lineBoxHeight);
+        @include hr();
+    
+        width: hLineWidth(2);
+    }
+
+    #okearo-n7k-h{
+        @include hLine(lineBoxTop(4,1), lineBoxLeft(4,1), $lineBoxHeight);
+        @include hr();
+    
+        width: hLineWidth(1);
+    }
+}
+
+$egbinTop: ($vStationBoxSpacing) + $okearoTop + $okearoHeight;
+$egbinLeft: ($hStationBoxSpacing*2) + $okearoWidth;
+$egbinWidth: stationWidth(4);
+$egbinHeight: stationHeight(3);
+#egbin{
+    @include station();
+    
+    top: $egbinTop;
+    left: $egbinLeft;
+    width: $egbinWidth;
+    height: $egbinHeight;
+    #egbin-n7k{
+        @include line();
+        @include lineBoxPosition(1, 1);
+    }
+    #egbin-n7k-v{
+        @include vDownLine(lineBoxTop(4,1), lineBoxLeft(4,1), $lineBoxHeight);
+        @include vSpan();
+    
+        height: vLineHeight(1) - 18;
+    }
+    #egbin-n8k{
+        @include line();
+        @include lineBoxPosition(1, 2);
+    }
+    #egbin-n8k-v{
+        @include vDownLine(lineBoxTop(4,2), lineBoxLeft(4,2), $lineBoxHeight);
+        @include vSpan();
+    
+        height: vLineHeight(2) - 18;
+    }
+    #egbin-n6w{
+        @include line();
+        @include lineBoxPosition(1, 3);
+    }
+    #egbin-b6n{
+        @include line();
+        @include lineBoxPosition(1, 4);
+    }
+    #egbin-n3j{
+        @include line();
+        @include lineBoxPosition(2, 1);
+    }
+    #egbin-n4j{
+        @include line();
+        @include lineBoxPosition(3, 1);
+    }
+
+    
+}
+
+
+
+

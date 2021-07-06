@@ -1,0 +1,281 @@
+#ikeja-west {
+  position: absolute;
+  border: medium solid #000;
+  left: 430px;
+  top: 50px;
+  width: 1200px;
+  height: 1200px;
+}
+
+#ikeja-west #ikejaW-nw1 {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 40px;
+  left: 40px;
+}
+
+#ikeja-west #ikejaW-r1w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 40px;
+  left: 331px;
+}
+
+#ikeja-west #ikejaW-h1w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 40px;
+  left: 622px;
+}
+
+#ikeja-west #ikejaW-m5w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 40px;
+  left: 913px;
+}
+
+#ikeja-west #ikejaW-w3l {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 331px;
+  left: 40px;
+}
+
+#ikeja-west #ikejaW-w4l {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 622px;
+  left: 40px;
+}
+
+#ikeja-west #ikejaW-k8w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 913px;
+  left: 40px;
+}
+
+#ikeja-west #ikejaW-k7w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 913px;
+  left: 331px;
+}
+
+#ikeja-west #ikejaW-n6w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 913px;
+  left: 622px;
+}
+
+#ikeja-west #ikejaW-k8w-v {
+  top: 1166px;
+  left: 165px;
+  position: absolute;
+  border: thin solid #000;
+  height: 258px;
+}
+
+#ikeja-west #ikejaW-k8w-v #ikejaW-k8w-v-arrow-down {
+  position: absolute;
+  top: 129px;
+  left: -5px;
+}
+
+#ikeja-west #ikejaW-k8w-v #ikejaW-k8w-v-arrow-up {
+  position: absolute;
+  top: 129px;
+  left: -5px;
+}
+
+#ikeja-west #ikejaW-k7w-v {
+  top: 1166px;
+  left: 456px;
+  position: absolute;
+  border: thin solid #000;
+  height: 550px;
+}
+
+#okearo {
+  position: absolute;
+  border: medium solid #000;
+  top: 1300px;
+  left: 50px;
+  width: 330px;
+  height: 1200px;
+}
+
+#okearo #okearo-k8w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 40px;
+  left: 40px;
+}
+
+#okearo #okearo-k7w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 331px;
+  left: 40px;
+}
+
+#okearo #okearo-n8k {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 622px;
+  left: 40px;
+}
+
+#okearo #okearo-n7k {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 913px;
+  left: 40px;
+}
+
+#okearo #okearo-k8w-h {
+  top: 165px;
+  left: 290px;
+  position: absolute;
+  width: 255px;
+}
+
+#okearo #okearo-k8w-v-arrow-right {
+  position: absolute;
+  left: 377.5px;
+  top: 165px;
+}
+
+#okearo #okearo-k8w-v-arrow-left {
+  position: absolute;
+  left: 377.5px;
+}
+
+#okearo #okearo-k7w-h {
+  top: 456px;
+  left: 290px;
+  position: absolute;
+  width: 545px;
+}
+
+#okearo #okearo-n8k-h {
+  top: 747px;
+  left: 290px;
+  position: absolute;
+  width: 545px;
+}
+
+#okearo #okearo-n7k-h {
+  top: 1038px;
+  left: 290px;
+  position: absolute;
+  width: 255px;
+}
+
+#egbin {
+  position: absolute;
+  border: medium solid #000;
+  top: 2550px;
+  left: 430px;
+  width: 1200px;
+  height: 910px;
+}
+
+#egbin #egbin-n7k {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 40px;
+  left: 40px;
+}
+
+#egbin #egbin-n7k-v {
+  bottom: 870px;
+  left: 165px;
+  position: absolute;
+  border: thin solid #000;
+  height: 240px;
+}
+
+#egbin #egbin-n8k {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 40px;
+  left: 331px;
+}
+
+#egbin #egbin-n8k-v {
+  bottom: 870px;
+  left: 456px;
+  position: absolute;
+  border: thin solid #000;
+  height: 532px;
+}
+
+#egbin #egbin-n6w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 40px;
+  left: 622px;
+}
+
+#egbin #egbin-b6n {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 40px;
+  left: 913px;
+}
+
+#egbin #egbin-n3j {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 331px;
+  left: 40px;
+}
+
+#egbin #egbin-n4j {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 622px;
+  left: 40px;
+}
+/*# sourceMappingURL=style.css.map */

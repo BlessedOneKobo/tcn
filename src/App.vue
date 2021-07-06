@@ -24,6 +24,10 @@ body {
   margin: 0;
   padding: 0;
 }
+#grid-container{
+  position: absolute;
+  margin-top: 0;
+}
 .site-banner {
   padding: var(--padding-y) 0.25em;
   display: flex;
