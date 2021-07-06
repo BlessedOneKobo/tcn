@@ -194,6 +194,37 @@ export default {
 
     <div id="grid-container">
       <div id="col1">
+
+        <div id="sakete">
+          <b style="font-size: 18px">SAKETE TS</b>
+          <div id="sakete-nw1">
+            <!--line box content starts -->
+            <LineBox name="NW1" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <!-- Horizontal arrow from nw1 -->
+          <hr id="sakete-nw1-h" />
+        </div>
+        
+        <div id="akangba">
+          <b style="font-size: 18px">AKANGBA TS</b>
+          <div id="akangba-w3l">
+            <!--line box content starts -->
+            <LineBox name="W3L" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <!-- Horizontal arrow from w3l -->
+          <hr id="akangba-w3l-h" />
+
+          <div id="akangba-w4l">
+            <!--line box content starts -->
+            <LineBox name="W4L" :transmissionData="defaultTransmissionData" />
+            <!-- Line Box content ends -->
+          </div>
+          <!-- Horizontal arrow from w4l -->
+          <hr id="akangba-w4l-h" />
+        </div>
+        
         <div id="ikeja-west">
           <b style="font-size: 18px">IKEJA-WEST TS</b>
           <div id="ikejaW-nw1">
@@ -253,6 +284,7 @@ export default {
           </div>
         </div>
         <div id="okearo">
+          <b style="font-size: 18px">OKEARO TS</b>
           <div id="okearo-k8w">
             <!--line box content starts -->
             <LineBox name="K8W" :transmissionData="transmissionData" />
@@ -288,6 +320,7 @@ export default {
         </div>
 
         <div id="egbin">
+          <b style="font-size: 18px">EGBIN TS</b>
           <div id="egbin-n7k">
             <!--line box content starts -->
             <LineBox name="N7K" :transmissionData="defaultTransmissionData" />

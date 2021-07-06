@@ -1,7 +1,7 @@
 $lineBoxWidth: 250px;
 $lineBoxHeight: 250px;
-$hLineBoxSpacing: 40px;
-$vLineBoxSpacing: 40px;
+$hLineBoxSpacing: 30px;
+$vLineBoxSpacing: 30px;
 $hStationBoxSpacing: 50px;
 $vStationBoxSpacing: 50px;
 
@@ -53,10 +53,11 @@ $vStationBoxSpacing: 50px;
 }
 @mixin hr {
     position: absolute;
+    border: solid thin grey;
 }
 @mixin vSpan {
     position: absolute;
-    border: thin solid #000;
+    border: thin solid grey;
 }
 @mixin vArrow($height) {
     position: absolute;
@@ -67,6 +68,64 @@ $vStationBoxSpacing: 50px;
 @mixin hArrow($width) {
     position: absolute;
     left: $lineBoxWidth + $width/2;
+}
+
+$saketeTop: $vStationBoxSpacing - $vLineBoxSpacing - $vStationBoxSpacing;
+$saketeLeft: $hStationBoxSpacing;
+$saketeWidth: stationWidth(1);
+$saketeHeight: stationHeight(1);
+#sakete{
+    @include station();
+
+    left: $saketeLeft;
+    top: $saketeTop;
+    width: $saketeWidth;
+    height: $saketeHeight;
+
+    #sakete-nw1{
+        @include line();
+        @include lineBoxPosition(1, 1);
+    }
+    #sakete-nw1-h{
+        @include hLine(lineBoxTop(1,1), lineBoxLeft(1,1), $lineBoxHeight);
+        @include hr();
+    
+        width: hLineWidth(1);
+    }
+}
+
+$akangbaTop: $vStationBoxSpacing + $vLineBoxSpacing + $lineBoxHeight;
+$akangbaLeft: $hStationBoxSpacing;
+$akangbaWidth: stationWidth(1);
+$akangbaHeight: stationHeight(2);
+#akangba{
+    @include station();
+
+    left: $akangbaLeft;
+    top: $akangbaTop;
+    width: $akangbaWidth;
+    height: $akangbaHeight;
+
+    #akangba-w3l{
+        @include line();
+        @include lineBoxPosition(1, 1);
+    }
+    #akangba-w4l{
+        @include line();
+        @include lineBoxPosition(2, 1);
+    }
+    #akangba-w3l-h{
+        @include hLine(lineBoxTop(1,1), lineBoxLeft(1,1), $lineBoxHeight);
+        @include hr();
+    
+        width: hLineWidth(1);
+    }
+    #akangba-w4l-h{
+        @include hLine(lineBoxTop(2,1), lineBoxLeft(2,1), $lineBoxHeight);
+        @include hr();
+    
+        width: hLineWidth(1);
+    }
 }
 
 $okearoWidth: stationWidth(1);

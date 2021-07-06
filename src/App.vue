@@ -26,7 +26,7 @@ body {
 }
 #grid-container{
   position: absolute;
-  margin-top: 0;
+  margin-top: 100px;
 }
 .site-banner {
   padding: var(--padding-y) 0.25em;
