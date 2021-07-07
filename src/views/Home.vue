@@ -80,7 +80,9 @@ export default {
         return "";
       }
 
-      return voltageInitialValue > 0 ? "fa-angle-left" : "fa-angle-right";
+      return voltageInitialValue > 0
+        ? "fa-angle-left blink"
+        : "fa-angle-right blink";
     },
     inArrowClass() {
       const {
@@ -91,7 +93,7 @@ export default {
         return "";
       }
 
-      return voltageInitialValue > 0 ? "fa-angle-down" : "fa-angle-up";
+      return voltageInitialValue > 0 ? "fa-angle-down blink" : "fa-angle-up blink";
     },
   },
   watch: {
@@ -440,6 +442,20 @@ export default {
 </template>
 
 <style scoped>
+.blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
 hr {
   border-color: #000;
 }
