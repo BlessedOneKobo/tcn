@@ -1,0 +1,19 @@
+@function stationWidth($lines) {
+    @return ($lines * $lineBoxWidth) + ($lines+1)*$hLineBoxSpacing;
+}
+
+@function stationHeight($lines) {
+    @return ($lines * $lineBoxHeight) + ($lines+1)*$vLineBoxSpacing;
+}
+@function lineBoxTop($row, $col) {
+    @return ($row - 1) + ($vLineBoxSpacing * $row) + ($row - 1)*$lineBoxHeight;
+}
+@function lineBoxLeft($row, $col) {
+    @return ($col - 1) + ($hLineBoxSpacing * $col) + ($col - 1)*$lineBoxWidth;
+}
+@function vLineHeight($lines) {
+    @return ($vLineBoxSpacing * ($lines + 1)) + $vStationBoxSpacing + (($lines - 1)*$lineBoxHeight) + ($lineBoxHeight/2) + (1 + ($lines * 2));
+}
+@function hLineWidth($lines) {
+    @return ($hLineBoxSpacing * ($lines + 1)) + $hStationBoxSpacing + (($lines - 1)*$lineBoxWidth) + ($lineBoxWidth/2);
+}

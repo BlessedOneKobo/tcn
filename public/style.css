@@ -1,10 +1,10 @@
 #sakete {
   position: absolute;
   border: medium solid #000;
-  left: 50px;
-  top: -30px;
-  width: 310px;
-  height: 310px;
+  left: 30px;
+  top: -20px;
+  width: 270px;
+  height: 290px;
 }
 
 #sakete #sakete-nw1 {
@@ -12,25 +12,24 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 30px;
+  top: 20px;
+  left: 10px;
 }
 
 #sakete #sakete-nw1-h {
-  top: 155px;
-  left: 280px;
+  top: 145px;
+  left: 260px;
   position: absolute;
-  border: solid thin grey;
-  width: 235px;
+  width: 175px;
 }
 
 #akangba {
   position: absolute;
   border: medium solid #000;
-  left: 50px;
-  top: 330px;
-  width: 310px;
-  height: 590px;
+  left: 30px;
+  top: 300px;
+  width: 270px;
+  height: 560px;
 }
 
 #akangba #akangba-w3l {
@@ -38,8 +37,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 30px;
+  top: 20px;
+  left: 10px;
 }
 
 #akangba #akangba-w4l {
@@ -47,33 +46,31 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 311px;
-  left: 30px;
+  top: 291px;
+  left: 10px;
 }
 
 #akangba #akangba-w3l-h {
-  top: 155px;
-  left: 280px;
+  top: 145px;
+  left: 260px;
   position: absolute;
-  border: solid thin grey;
-  width: 235px;
+  width: 175px;
 }
 
 #akangba #akangba-w4l-h {
-  top: 436px;
-  left: 280px;
+  top: 416px;
+  left: 260px;
   position: absolute;
-  border: solid thin grey;
-  width: 235px;
+  width: 175px;
 }
 
 #ikeja-west {
   position: absolute;
   border: medium solid #000;
-  left: 410px;
-  top: 50px;
-  width: 1150px;
-  height: 1150px;
+  left: 330px;
+  top: 30px;
+  width: 1050px;
+  height: 1100px;
 }
 
 #ikeja-west #ikejaW-nw1 {
@@ -81,8 +78,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 30px;
+  top: 20px;
+  left: 10px;
 }
 
 #ikeja-west #ikejaW-r1w {
@@ -90,8 +87,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 311px;
+  top: 20px;
+  left: 271px;
 }
 
 #ikeja-west #ikejaW-h1w {
@@ -99,8 +96,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 592px;
+  top: 20px;
+  left: 532px;
 }
 
 #ikeja-west #ikejaW-m5w {
@@ -108,8 +105,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 873px;
+  top: 20px;
+  left: 793px;
 }
 
 #ikeja-west #ikejaW-w3l {
@@ -117,8 +114,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 311px;
-  left: 30px;
+  top: 291px;
+  left: 10px;
 }
 
 #ikeja-west #ikejaW-w4l {
@@ -126,17 +123,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 592px;
-  left: 30px;
-}
-
-#ikeja-west #ikejaW-k8w {
-  position: absolute;
-  border: thin solid #000;
-  width: 250px;
-  height: 250px;
-  top: 873px;
-  left: 30px;
+  top: 562px;
+  left: 10px;
 }
 
 #ikeja-west #ikejaW-k7w {
@@ -144,8 +132,45 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 873px;
-  left: 311px;
+  top: 833px;
+  left: 10px;
+}
+
+#ikeja-west #ikejaW-k7w-v {
+  top: 1086px;
+  left: 135px;
+  position: absolute;
+  border: thin solid grey;
+  height: 198px;
+}
+
+#ikeja-west #ikejaW-k7w-v #ikejaW-k7w-v-arrow-down {
+  position: absolute;
+  top: 99px;
+  left: -5px;
+}
+
+#ikeja-west #ikejaW-k7w-v #ikejaW-k7w-v-arrow-up {
+  position: absolute;
+  top: 99px;
+  left: -5px;
+}
+
+#ikeja-west #ikejaW-k8w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 833px;
+  left: 271px;
+}
+
+#ikeja-west #ikejaW-k8w-v {
+  top: 1086px;
+  left: 396px;
+  position: absolute;
+  border: thin solid grey;
+  height: 470px;
 }
 
 #ikeja-west #ikejaW-n6w {
@@ -153,54 +178,32 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 873px;
-  left: 592px;
+  top: 833px;
+  left: 532px;
 }
 
-#ikeja-west #ikejaW-k8w-v {
-  top: 1126px;
-  left: 155px;
+#ikeja-west #ikejaW-n6w-h {
+  top: 958px;
+  left: 782px;
+  position: absolute;
+  width: 83.33333px;
+}
+
+#ikeja-west #ikejaW-n6w-v {
+  left: 865.33333px;
+  top: 967px;
   position: absolute;
   border: thin solid grey;
-  height: 238px;
-}
-
-#ikeja-west #ikejaW-k8w-v #ikejaW-k8w-v-arrow-down {
-  position: absolute;
-  top: 119px;
-  left: -5px;
-}
-
-#ikeja-west #ikejaW-k8w-v #ikejaW-k8w-v-arrow-up {
-  position: absolute;
-  top: 119px;
-  left: -5px;
-}
-
-#ikeja-west #ikejaW-k7w-v {
-  top: 1126px;
-  left: 436px;
-  position: absolute;
-  border: thin solid grey;
-  height: 520px;
+  height: 1558px;
 }
 
 #okearo {
   position: absolute;
   border: medium solid #000;
-  top: 1250px;
-  left: 50px;
-  width: 310px;
-  height: 1150px;
-}
-
-#okearo #okearo-k8w {
-  position: absolute;
-  border: thin solid #000;
-  width: 250px;
-  height: 250px;
-  top: 30px;
+  top: 1160px;
   left: 30px;
+  width: 270px;
+  height: 1100px;
 }
 
 #okearo #okearo-k7w {
@@ -208,8 +211,42 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 311px;
-  left: 30px;
+  top: 20px;
+  left: 10px;
+}
+
+#okearo #okearo-k7w-h {
+  top: 145px;
+  left: 260px;
+  position: absolute;
+  width: 175px;
+}
+
+#okearo #okearo-k7w-v-arrow-right {
+  position: absolute;
+  left: 337.5px;
+  top: 145px;
+}
+
+#okearo #okearo-k7w-v-arrow-left {
+  position: absolute;
+  left: 337.5px;
+}
+
+#okearo #okearo-k8w {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 291px;
+  left: 10px;
+}
+
+#okearo #okearo-k8w-h {
+  top: 416px;
+  left: 260px;
+  position: absolute;
+  width: 435px;
 }
 
 #okearo #okearo-n8k {
@@ -217,8 +254,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 592px;
-  left: 30px;
+  top: 562px;
+  left: 10px;
 }
 
 #okearo #okearo-n7k {
@@ -226,60 +263,105 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 873px;
-  left: 30px;
-}
-
-#okearo #okearo-k8w-h {
-  top: 155px;
-  left: 280px;
-  position: absolute;
-  border: solid thin grey;
-  width: 235px;
-}
-
-#okearo #okearo-k8w-v-arrow-right {
-  position: absolute;
-  left: 367.5px;
-  top: 155px;
-}
-
-#okearo #okearo-k8w-v-arrow-left {
-  position: absolute;
-  left: 367.5px;
-}
-
-#okearo #okearo-k7w-h {
-  top: 436px;
-  left: 280px;
-  position: absolute;
-  border: solid thin grey;
-  width: 515px;
+  top: 833px;
+  left: 10px;
 }
 
 #okearo #okearo-n8k-h {
-  top: 717px;
-  left: 280px;
+  top: 687px;
+  left: 260px;
   position: absolute;
-  border: solid thin grey;
-  width: 515px;
+  width: 695px;
 }
 
 #okearo #okearo-n7k-h {
-  top: 998px;
-  left: 280px;
+  top: 958px;
+  left: 260px;
   position: absolute;
-  border: solid thin grey;
-  width: 235px;
+  width: 435px;
+}
+
+#ajah {
+  position: absolute;
+  border: medium solid #000;
+  top: 2550px;
+  left: 30px;
+  width: 530px;
+  height: 830px;
+}
+
+#ajah #ajah-n3j {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 20px;
+  left: 271px;
+}
+
+#ajah #ajah-n3j-h {
+  top: 145px;
+  left: 521px;
+  position: absolute;
+  width: 50px;
+}
+
+#ajah #ajah-n4j {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 291px;
+  left: 271px;
+}
+
+#ajah #ajah-n4j-h {
+  top: 416px;
+  left: 521px;
+  position: absolute;
+  width: 50px;
+}
+
+#ajah #ajah-j1e {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 562px;
+  left: 271px;
+}
+
+#ajah #ajah-j1e-h {
+  top: 687px;
+  left: 521px;
+  position: absolute;
+  width: 435px;
+}
+
+#ajah #ajah-j1b {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 562px;
+  left: 10px;
+}
+
+#ajah #ajah-j1b-v {
+  top: 815px;
+  left: 135px;
+  position: absolute;
+  border: thin solid grey;
+  height: 198px;
 }
 
 #egbin {
   position: absolute;
   border: medium solid #000;
-  top: 2450px;
-  left: 410px;
-  width: 1150px;
-  height: 870px;
+  top: 2290px;
+  left: 590px;
+  width: 1050px;
+  height: 830px;
 }
 
 #egbin #egbin-n7k {
@@ -287,16 +369,16 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 30px;
+  top: 20px;
+  left: 10px;
 }
 
 #egbin #egbin-n7k-v {
-  bottom: 840px;
-  left: 155px;
+  bottom: 810px;
+  left: 135px;
   position: absolute;
   border: thin solid grey;
-  height: 220px;
+  height: 183px;
 }
 
 #egbin #egbin-n8k {
@@ -304,16 +386,16 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 311px;
+  top: 20px;
+  left: 271px;
 }
 
 #egbin #egbin-n8k-v {
-  bottom: 840px;
-  left: 436px;
+  bottom: 810px;
+  left: 396px;
   position: absolute;
   border: thin solid grey;
-  height: 502px;
+  height: 452px;
 }
 
 #egbin #egbin-n6w {
@@ -321,8 +403,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 592px;
+  top: 20px;
+  left: 532px;
 }
 
 #egbin #egbin-b6n {
@@ -330,8 +412,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 30px;
-  left: 873px;
+  top: 20px;
+  left: 793px;
 }
 
 #egbin #egbin-n3j {
@@ -339,8 +421,8 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 311px;
-  left: 30px;
+  top: 291px;
+  left: 10px;
 }
 
 #egbin #egbin-n4j {
@@ -348,7 +430,76 @@
   border: thin solid #000;
   width: 250px;
   height: 250px;
-  top: 592px;
+  top: 562px;
+  left: 10px;
+}
+
+#lekki {
+  position: absolute;
+  border: medium solid #000;
+  top: 3410px;
+  left: 590px;
+  height: 290px;
+  width: 530px;
+}
+
+#lekki #lekki-j1e {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 20px;
+  left: 271px;
+}
+
+#lekki #lekki-j1e-v {
+  bottom: 270px;
+  left: 396px;
+  position: absolute;
+  border: thin solid grey;
+  height: 183px;
+}
+
+#lekki #lekki-b1e {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 20px;
+  left: 10px;
+}
+
+#alagbon {
+  position: absolute;
+  border: medium solid #000;
+  top: 3410px;
   left: 30px;
+  height: 290px;
+  width: 530px;
+}
+
+#alagbon #alagbon-j1b {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 20px;
+  left: 10px;
+}
+
+#alagbon #alagbon-b1e {
+  position: absolute;
+  border: thin solid #000;
+  width: 250px;
+  height: 250px;
+  top: 20px;
+  left: 271px;
+}
+
+#alagbon #alagbon-b1e-h {
+  top: 145px;
+  left: 521px;
+  position: absolute;
+  width: 175px;
 }
 /*# sourceMappingURL=style.css.map */
