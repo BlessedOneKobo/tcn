@@ -33,15 +33,29 @@
 }
 @mixin vSpan {
     position: absolute;
-    border: thin solid grey;
+    border-left: thin solid grey;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
 }
 @mixin vArrow($height) {
     position: absolute;
-    top: $height/2;
+    top: $height/3;
+    left: -5px;
+}
+
+@mixin vDArrow($height) {
+    position: absolute;
+    top: $height/3 * 2;
     left: -5px;
 }
 
 @mixin hArrow($width) {
     position: absolute;
-    left: $lineBoxWidth + $width/2;
+    left: $lineBoxWidth + $width/3;
+}
+
+@mixin hDArrow($width) {
+    position: absolute;
+    left: $lineBoxWidth + ($width/3 * 2);
 }

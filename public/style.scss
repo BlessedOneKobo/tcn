@@ -120,6 +120,10 @@ $ikeja-westLeft: ($hStationBoxSpacing*2) + $okearoWidth;
         #ikejaW-k7w-v-arrow-up{
             @include vArrow(vLineHeight(1));
         }
+
+        #ikejaW-k7w-v-double-arrow{
+            @include vDArrow(vLineHeight(1));
+        }
     }
     
     #ikejaW-k8w{
@@ -170,13 +174,18 @@ $okearoTop: ($vStationBoxSpacing*2) + $ikeja-westHeight;
     
         width: hLineWidth(1);
     }
-    #okearo-k7w-v-arrow-right{
+    #okearo-k7w-h-arrow-right{
         @include hArrow(hLineWidth(1));
 
         top: lineBoxTop(1,1) + $lineBoxHeight/2;
     }
-    #okearo-k7w-v-arrow-left{
+    /*#okearo-k7w-h-arrow-left{
         @include hArrow(hLineWidth(1));
+    }*/
+    #okearo-k7w-h-double-arrow{
+        @include hDArrow(hLineWidth(1));
+
+        top: lineBoxTop(1,1) + $lineBoxHeight/2;
     }
     #okearo-k8w{
         @include line();

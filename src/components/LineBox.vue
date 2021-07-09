@@ -52,7 +52,7 @@ import voltageDisplayMixin from "@/mixins/voltage-display-mixin";
 
 const transmissionUnit = Object.freeze({
   power: "Mw",
-  mvar: "Mva",
+  mvar: "Mvar",
   voltage: "KV",
   current: "A",
 });

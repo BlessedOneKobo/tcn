@@ -140,19 +140,28 @@
   top: 1086px;
   left: 135px;
   position: absolute;
-  border: thin solid grey;
+  border-left: thin solid grey;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
   height: 198px;
 }
 
 #ikeja-west #ikejaW-k7w-v #ikejaW-k7w-v-arrow-down {
   position: absolute;
-  top: 99px;
+  top: 66px;
   left: -5px;
 }
 
 #ikeja-west #ikejaW-k7w-v #ikejaW-k7w-v-arrow-up {
   position: absolute;
-  top: 99px;
+  top: 66px;
+  left: -5px;
+}
+
+#ikeja-west #ikejaW-k7w-v #ikejaW-k7w-v-double-arrow {
+  position: absolute;
+  top: 132px;
   left: -5px;
 }
 
@@ -169,7 +178,10 @@
   top: 1086px;
   left: 396px;
   position: absolute;
-  border: thin solid grey;
+  border-left: thin solid grey;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
   height: 470px;
 }
 
@@ -193,7 +205,10 @@
   left: 865.33333px;
   top: 967px;
   position: absolute;
-  border: thin solid grey;
+  border-left: thin solid grey;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
   height: 1558px;
 }
 
@@ -204,6 +219,9 @@
   left: 30px;
   width: 270px;
   height: 1100px;
+  /*#okearo-k7w-h-arrow-left{
+        @include hArrow(hLineWidth(1));
+    }*/
 }
 
 #okearo #okearo-k7w {
@@ -222,15 +240,16 @@
   width: 175px;
 }
 
-#okearo #okearo-k7w-v-arrow-right {
+#okearo #okearo-k7w-h-arrow-right {
   position: absolute;
-  left: 337.5px;
+  left: 308.33333px;
   top: 145px;
 }
 
-#okearo #okearo-k7w-v-arrow-left {
+#okearo #okearo-k7w-h-double-arrow {
   position: absolute;
-  left: 337.5px;
+  left: 366.66667px;
+  top: 145px;
 }
 
 #okearo #okearo-k8w {
@@ -351,7 +370,10 @@
   top: 815px;
   left: 135px;
   position: absolute;
-  border: thin solid grey;
+  border-left: thin solid grey;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
   height: 198px;
 }
 
@@ -377,7 +399,10 @@
   bottom: 810px;
   left: 135px;
   position: absolute;
-  border: thin solid grey;
+  border-left: thin solid grey;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
   height: 183px;
 }
 
@@ -394,7 +419,10 @@
   bottom: 810px;
   left: 396px;
   position: absolute;
-  border: thin solid grey;
+  border-left: thin solid grey;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
   height: 452px;
 }
 
@@ -456,7 +484,10 @@
   bottom: 270px;
   left: 396px;
   position: absolute;
-  border: thin solid grey;
+  border-left: thin solid grey;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
   height: 183px;
 }
 

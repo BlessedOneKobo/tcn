@@ -1,5 +1,5 @@
 const threshold = Object.freeze({
-  voltage: Object.freeze({ min: 320, max: 350 }),
+  voltage: Object.freeze({ min: 300, max: 342 }),
 });
 
 export default {

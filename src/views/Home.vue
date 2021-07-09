@@ -73,27 +73,52 @@ export default {
     },
     outArrowClass() {
       const {
-        power: { initialValue: voltageInitialValue },
+        mvar: { initialValue: mvarInitialValue },
       } = this.transmissionData;
 
-      if (!voltageInitialValue) {
+      if (!mvarInitialValue) {
         return "";
       }
 
-      return voltageInitialValue > 0
+      return mvarInitialValue > 0
         ? "fa-angle-left blink"
         : "fa-angle-right blink";
     },
     inArrowClass() {
       const {
-        power: { initialValue: voltageInitialValue },
+        mvar: { initialValue: mvarInitialValue },
       } = this.transmissionData;
 
-      if (!voltageInitialValue) {
+      if (!mvarInitialValue) {
         return "";
       }
 
-      return voltageInitialValue > 0 ? "fa-angle-down blink" : "fa-angle-up blink";
+      return mvarInitialValue > 0 ? "fa-angle-down blink" : "fa-angle-up blink";
+    },
+
+    outDArrowClass() {
+      const {
+        power: { initialValue: powerInitialValue },
+      } = this.transmissionData;
+
+      if (!powerInitialValue) {
+        return "";
+      }
+
+      return powerInitialValue > 0
+        ? "fa-angle-double-left blink"
+        : "fa-angle-double-right blink";
+    },
+    inDArrowClass() {
+      const {
+        power: { initialValue: powerInitialValue },
+      } = this.transmissionData;
+
+      if (!powerInitialValue) {
+        return "";
+      }
+
+      return powerInitialValue > 0 ? "fa-angle-double-down blink" : "fa-angle-double-up blink";
     },
   },
   watch: {
@@ -267,13 +292,20 @@ export default {
             <LineBox name="K7W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <span id="ikejaW-k7w-v" :class="arrowDisplayClass"
-            ><i
-              id="ikejaW-k7w-v-arrow-up"
-              class="fas"
-              :class="[inArrowClass, arrowDisplayClass]"
-            ></i
-          ></span>
+          <span id="ikejaW-k7w-v" :class="arrowDisplayClass">
+            <i
+                id="ikejaW-k7w-v-arrow-up"
+                class="fas"
+                :class="[inArrowClass, arrowDisplayClass]"
+              >
+              </i>
+              <i
+                id="ikejaW-k7w-v-double-arrow"
+                class="fas"
+                :class="[inDArrowClass, arrowDisplayClass]"
+              >
+              </i>
+            </span>
 
           <div id="ikejaW-k8w">
             <!--line box content starts -->
@@ -293,7 +325,7 @@ export default {
           <span id="ikejaW-n6w-v"></span>
         </div>
         <div id="okearo">
-          <b style="font-size: 18px">OKEARO TS</b>
+          <b style="font-size: 18px">OKE-ARO TS</b>
           <div id="okearo-k7w">
             <!--line box content starts -->
             <LineBox name="K7W" :transmissionData="transmissionData" />
@@ -301,9 +333,14 @@ export default {
           </div>
           <hr id="okearo-k7w-h" :class="arrowDisplayClass" />
           <i
-            id="okearo-k7w-v-arrow-right"
+            id="okearo-k7w-h-arrow-right"
             class="fas"
             :class="[outArrowClass, arrowDisplayClass]"
+          ></i>
+          <i
+            id="okearo-k7w-h-double-arrow"
+            class="fas"
+            :class="[outDArrowClass, arrowDisplayClass]"
           ></i>
 
           <div id="okearo-k8w">
@@ -459,9 +496,10 @@ export default {
 hr {
   border-color: #000;
 }
+
 hr.success,
-#ikeja-west #ikejaW-k8w-v.success {
-  border-color: green;
+#ikeja-west #ikejaW-k7w-v.success {
+  border-left-color: green;
 }
 .navigation {
   background-color: var(--dark-blue);
@@ -507,13 +545,14 @@ hr.success,
 .general.success {
   color: #0f7f0f;
 }
+/*
 .main-card {
   background-color: var(--dark-blue);
   margin-top: 0;
   padding: 0em 1em;
   padding-bottom: 2em;
   border-radius: 8px;
-  height: 220px;
+  height: 10px;
 }
 .main-card.error {
   background-color: red;
@@ -527,6 +566,17 @@ hr.success,
 .main-card.success .card-line {
   border-color: green;
 }
+.main-card.error {
+  background-color: red;
+}
+.main-card.success {
+  background-color: green;
+}
+.details-card {
+  display: flex;
+  justify-content: space-between;
+}
+*/
 .card-line {
   width: 50%;
   border: 2px solid #778495;
@@ -538,16 +588,6 @@ hr.success,
 }
 .output-line {
   left: 97%;
-}
-.main-card.error {
-  background-color: red;
-}
-.main-card.success {
-  background-color: green;
-}
-.details-card {
-  display: flex;
-  justify-content: space-between;
 }
 .details-card.error {
   color: red;
