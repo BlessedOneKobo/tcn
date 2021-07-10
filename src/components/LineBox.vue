@@ -2,9 +2,6 @@
   <div class="main-card" :class="voltageDisplayClass">
     <b style="font-size: 16px">{{ name }}</b>
     <div class="details-card">
-      <div class="symbol">
-        <img src="@/assets/watt.png" width="170" height="92" />
-      </div>
       <div class="detail">
         <span class="detail-text">
           {{ transmissionDataMessage("power") }}
@@ -13,9 +10,6 @@
     </div>
 
     <div class="details-card">
-      <div class="symbol">
-        <img src="@/assets/amp.png" width="170" height="92" />
-      </div>
       <div class="detail">
         <span class="detail-text">
           {{ transmissionDataMessage("current") }}
@@ -24,9 +18,6 @@
     </div>
 
     <div class="details-card">
-      <div class="symbol">
-        <img src="@/assets/volt.png" width="170" height="92" />
-      </div>
       <div class="detail">
         <span class="detail-text">
           {{ transmissionDataMessage("voltage") }}
@@ -35,9 +26,6 @@
     </div>
 
     <div class="details-card">
-      <div class="symbol">
-        <img src="@/assets/reactive.png" width="170" height="92" />
-      </div>
       <div class="detail">
         <span class="detail-text">
           {{ transmissionDataMessage("mvar") }}
@@ -108,10 +96,10 @@ export default {
 .main-card {
   background-color: var(--dark-blue);
   margin-top: 0;
-  padding: 0em 1em;
+  padding: 0em 0.5em;
   padding-bottom: 2em;
   border-radius: 8px;
-  height: 220px;
+  height: 78%;
 }
 .main-card.error {
   background-color: red;
@@ -131,27 +119,13 @@ export default {
 .main-card.success {
   background-color: green;
 }
-.details-card {
-  display: flex;
-  justify-content: space-between;
-}
 .details-card.error {
   color: red;
 }
 .details-card:not(:last-of-type) {
-  margin-bottom: 1.5em;
-}
-.details-card .symbol {
-  flex: 0 1 25%;
-}
-.details-card .symbol img {
-  width: 100%;
-  height: auto;
-  display: flex;
-  align-items: stretch;
+  margin-bottom: 0.6em;
 }
 .details-card .detail {
-  flex: 0 1 65%;
   background-color: #fff;
   min-height: 2em;
   display: flex;
@@ -159,6 +133,7 @@ export default {
   align-items: center;
   padding-left: 1em;
   font-weight: bold;
+  font-size: 70%;
 }
 .details-card .detail-text {
   transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;

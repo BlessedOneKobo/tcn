@@ -10,6 +10,8 @@
   </div>
 </template>
 
+<style lang="scss" src="@/sass/style.scss"></style>
+
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 
@@ -24,7 +26,7 @@ body {
   margin: 0;
   padding: 0;
 }
-#grid-container{
+#grid-container {
   position: absolute;
   margin-top: 100px;
 }
