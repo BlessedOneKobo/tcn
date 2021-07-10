@@ -24,7 +24,7 @@ export default {
   color: var(--error-color);
 }
 .details-card:not(:last-of-type) {
-  margin-bottom: 0.6em;
+  margin-bottom: 0.1em;
 }
 .details-card .detail {
   background-color: #fff;
@@ -34,7 +34,7 @@ export default {
   align-items: center;
   padding-left: 1em;
   font-weight: bold;
-  font-size: 70%;
+  font-size: 55%;
 }
 .details-card .detail-text {
   transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;

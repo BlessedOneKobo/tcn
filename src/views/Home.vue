@@ -229,7 +229,7 @@ export default {
     <div id="grid-container">
       <div id="col1">
         <div id="sakete">
-          <b style="font-size: 18px">SAKETE TS</b>
+          <b style="font-size: 12px">SAKETE TS</b>
           <div id="sakete-nw1" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="NW1" :transmissionData="defaultTransmissionData" />
@@ -240,7 +240,7 @@ export default {
         </div>
 
         <div id="akangba">
-          <b style="font-size: 18px">AKANGBA TS</b>
+          <b style="font-size: 12px">AKANGBA TS</b>
           <div id="akangba-w3l" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="W3L" :transmissionData="defaultTransmissionData" />
@@ -259,7 +259,7 @@ export default {
         </div>
 
         <div id="ikeja-west">
-          <b style="font-size: 18px">IKEJA-WEST TS</b>
+          <b style="font-size: 12px">IKEJA-WEST TS</b>
           <div id="ikejaW-nw1" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="NW1" :transmissionData="defaultTransmissionData" />
@@ -328,7 +328,7 @@ export default {
           <span id="ikejaW-n6w-v"></span>
         </div>
         <div id="okearo">
-          <b style="font-size: 18px">OKE-ARO TS</b>
+          <b style="font-size: 12px">OKE-ARO TS</b>
           <div
             id="okearo-k7w"
             class="linebox-container"
@@ -373,7 +373,7 @@ export default {
         </div>
 
         <div id="ajah">
-          <b style="font-size: 18px">AJAH TS</b>
+          <b style="font-size: 12px">AJAH TS</b>
           <div id="ajah-n3j" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N3J" :transmissionData="defaultTransmissionData" />
@@ -408,7 +408,7 @@ export default {
         </div>
 
         <div id="egbin">
-          <b style="font-size: 18px">EGBIN TS</b>
+          <b style="font-size: 12px">EGBIN TS</b>
           <div id="egbin-n7k" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N7K" :transmissionData="defaultTransmissionData" />
@@ -447,7 +447,7 @@ export default {
         </div>
 
         <div id="alagbon">
-          <b style="font-size: 18px">ALAGBON TS</b>
+          <b style="font-size: 12px">ALAGBON TS</b>
           <div id="alagbon-j1b" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="J1B" :transmissionData="defaultTransmissionData" />
@@ -463,7 +463,7 @@ export default {
         </div>
 
         <div id="lekki">
-          <b style="font-size: 18px">LEKKI TS</b>
+          <b style="font-size: 12px">LEKKI TS</b>
           <div id="lekki-j1e" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="J1E" :transmissionData="defaultTransmissionData" />

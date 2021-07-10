@@ -60,7 +60,7 @@ export default {
 
 <template>
   <div class="main-card" :class="voltageDisplayClass">
-    <b style="font-size: 16px">{{ name }}</b>
+    <b style="font-size: 10px">{{ name }}</b>
     <DetailCard :text="transmissionDataMessage('power')" />
 
     <DetailCard :text="transmissionDataMessage('current')" />
@@ -79,7 +79,7 @@ export default {
   padding: 0em 0.5em;
   padding-bottom: 2em;
   border-radius: 8px;
-  height: 78%;
+  height: 68%;
 }
 .main-card.error {
   background-color: var(--error-color);
