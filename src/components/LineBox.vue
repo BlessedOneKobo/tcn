@@ -82,21 +82,21 @@ export default {
   height: 78%;
 }
 .main-card.error {
-  background-color: red;
+  background-color: var(--error-color);
 }
 .main-card.success {
-  background-color: green;
+  background-color: var(--success-color);
 }
 .main-card.error .card-line {
-  border-color: red;
+  border-color: var(--error-color);
 }
 .main-card.success .card-line {
-  border-color: green;
+  border-color: var(--success-color);
 }
 .main-card.error {
-  background-color: red;
+  background-color: var(--error-color);
 }
 .main-card.success {
-  background-color: green;
+  background-color: var(--success-color);
 }
 </style>

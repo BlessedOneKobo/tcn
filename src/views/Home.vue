@@ -481,7 +481,10 @@ export default {
       </div>
     </div>
     <modal name="linebox-modal" class="linebox-modal">
-      <MainBox name="K7W" :transmissionData="transmissionData" />
+      <MainBox
+        name="K7W"
+        v-bind="{ transmissionData, arrowClass, outArrowClass, outDArrowClass }"
+      />
     </modal>
   </div>
 </template>
@@ -491,11 +494,8 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2em 4em !important;
+  padding: 2em 6em 2em 2em !important;
 }
-</style>
-
-<style scoped>
 .blink {
   animation: blink-animation 1s steps(5, start) infinite;
   -webkit-animation: blink-animation 1s steps(5, start) infinite;
@@ -510,13 +510,16 @@ export default {
     visibility: hidden;
   }
 }
+</style>
+
+<style scoped>
 hr {
   border-color: #000;
 }
 
 hr.success,
 #ikeja-west #ikejaW-k7w-v.success {
-  border-left-color: green;
+  border-color: var(--arrow-success-color);
 }
 .navigation {
   background-color: var(--dark-blue);
@@ -554,13 +557,17 @@ hr.success,
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-.fas.error,
-.general.error {
-  color: #f00;
+.fas.error {
+  color: var(--arrow-error-color);
 }
-.fas.success,
+.general.error {
+  color: var(--error-color);
+}
+.fas.success {
+  color: var(--arrow-success-color);
+}
 .general.success {
-  color: #0f7f0f;
+  color: var(--error-color);
 }
 .linebox-container {
   transition: transform 0.3s;

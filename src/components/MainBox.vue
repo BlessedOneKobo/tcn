@@ -12,7 +12,13 @@ const transmissionUnit = Object.freeze({
 
 export default {
   name: "LineBox",
-  props: ["name", "transmissionData"],
+  props: [
+    "arrowClass",
+    "outArrowClass",
+    "outDArrowClass",
+    "name",
+    "transmissionData",
+  ],
   mixins: [voltageDisplayMixin],
   components: {
     DetailCard,
@@ -64,6 +70,9 @@ export default {
 <template>
   <div class="main-card" :class="voltageDisplayClass">
     <b style="font-size: 16px">{{ name }}</b>
+    <i class="fas" :class="[outArrowClass, arrowDisplayClass]"></i>
+    <i class="fas" :class="[outDArrowClass, arrowDisplayClass]"></i>
+    <div class="line"></div>
     <div class="content-container">
       <div class="details-section">
         <DetailCard class="card" :text="transmissionDataMessage('power')" />
@@ -81,15 +90,15 @@ export default {
         </div>
         <div class="radio-group">
           <label>
-            <input type="radio" :disabled="!status" />
+            <input type="radio" :disabled="status" />
             <span>Voltage Control</span>
           </label>
           <label>
-            <input type="radio" :disabled="!status" />
+            <input type="radio" :disabled="status" />
             <span>Work Permit</span>
           </label>
           <label>
-            <input type="radio" :disabled="!status" />
+            <input type="radio" :disabled="status" />
             <span>Fault</span>
           </label>
         </div>
@@ -107,24 +116,54 @@ export default {
   padding-bottom: 2em;
   border-radius: 8px;
   height: 78%;
+  position: relative;
+  max-width: 80%;
 }
 .main-card.error {
-  background-color: red;
+  background-color: var(--error-color);
 }
 .main-card.success {
-  background-color: green;
+  background-color: var(--success-color);
 }
 .main-card.error .card-line {
-  border-color: red;
+  border-color: var(--error-color);
 }
 .main-card.success .card-line {
-  border-color: green;
+  border-color: var(--success-color);
 }
 .main-card.error {
-  background-color: red;
+  background-color: var(--error-color);
 }
 .main-card.success {
-  background-color: green;
+  background-color: var(--success-color);
+}
+.main-card.error .line {
+  border-color: var(--arrow-success-color);
+}
+.main-card.success .line {
+  border-color: var(--arrow-success-color);
+}
+.main-card.error .fas {
+  color: var(--arrow-error-color);
+}
+.main-card.success .fas {
+  color: var(--arrow-success-color);
+}
+.fas {
+  font-size: 150%;
+  position: absolute;
+  top: 45.5%;
+  right: -10%;
+}
+.fas:last-of-type {
+  right: -25%;
+}
+.line {
+  width: 35%;
+  border: 2px solid var(--dark-blue);
+  position: absolute;
+  right: -35%;
+  top: 50%;
 }
 .content-container {
   display: flex;

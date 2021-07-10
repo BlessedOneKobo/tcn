@@ -21,7 +21,7 @@ export default {
 
 <style scoped>
 .details-card.error {
-  color: red;
+  color: var(--error-color);
 }
 .details-card:not(:last-of-type) {
   margin-bottom: 0.6em;
@@ -43,9 +43,9 @@ export default {
   transform: scale(1.125);
 }
 .details-card .detail-text.success {
-  color: green;
+  color: var(--success-color);
 }
 .details-card .detail-text.error {
-  color: red;
+  color: var(--error-color);
 }
 </style>

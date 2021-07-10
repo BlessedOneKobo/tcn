@@ -19,6 +19,10 @@
   --sm-margin-y: 2em;
   --padding-y: 1.5em;
   --dark-blue: #778495;
+  --success-color: green;
+  --error-color: red;
+  --arrow-error-color: red;
+  --arrow-success-color: blue;
 }
 body {
   background-color: #c8d5e1;
