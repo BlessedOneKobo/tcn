@@ -1,6 +1,7 @@
 <script>
 import DetailCard from "./DetailCard.vue";
 import voltageDisplayMixin from "@/mixins/voltage-display-mixin";
+import { ToggleButton } from "vue-js-toggle-button";
 
 const transmissionUnit = Object.freeze({
   power: "Mw",
@@ -15,6 +16,16 @@ export default {
   mixins: [voltageDisplayMixin],
   components: {
     DetailCard,
+    ToggleButton,
+  },
+  data() {
+    return {
+      msg: {
+        text: "",
+        type: "",
+      },
+      status: false,
+    };
   },
   computed: {
     hasEmptyTransmissionValue() {
@@ -47,27 +58,43 @@ export default {
       }
     },
   },
-  data() {
-    return {
-      msg: {
-        text: "",
-        type: "",
-      },
-    };
-  },
 };
 </script>
 
 <template>
   <div class="main-card" :class="voltageDisplayClass">
     <b style="font-size: 16px">{{ name }}</b>
-    <DetailCard :text="transmissionDataMessage('power')" />
+    <div class="content-container">
+      <div class="details-section">
+        <DetailCard class="card" :text="transmissionDataMessage('power')" />
 
-    <DetailCard :text="transmissionDataMessage('current')" />
+        <DetailCard class="card" :text="transmissionDataMessage('current')" />
 
-    <DetailCard :text="transmissionDataMessage('voltage')" />
+        <DetailCard class="card" :text="transmissionDataMessage('voltage')" />
 
-    <DetailCard :text="transmissionDataMessage('mvar')" />
+        <DetailCard class="card" :text="transmissionDataMessage('mvar')" />
+      </div>
+      <div class="status-section">
+        <div class="status-button-container">
+          <p>Status</p>
+          <toggle-button v-model="status" color="#5A98F4" labels />
+        </div>
+        <div class="radio-group">
+          <label>
+            <input type="radio" :disabled="!status" />
+            <span>Voltage Control</span>
+          </label>
+          <label>
+            <input type="radio" :disabled="!status" />
+            <span>Work Permit</span>
+          </label>
+          <label>
+            <input type="radio" :disabled="!status" />
+            <span>Fault</span>
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -98,5 +125,35 @@ export default {
 }
 .main-card.success {
   background-color: green;
+}
+.content-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.details-section,
+.status-section {
+  flex-basis: 42.5%;
+}
+.status-section {
+  font-size: 110%;
+  color: #fff;
+}
+.details-section .card {
+  font-size: 150%;
+}
+.radio-group {
+  display: flex;
+  flex-direction: column;
+}
+.status-button-container {
+  text-align: center;
+  margin-bottom: 1.25em;
+}
+.status-section input[disabled="disabled"] + span {
+  opacity: 0.5;
+}
+.status-button-container p {
+  margin-bottom: 0;
 }
 </style>

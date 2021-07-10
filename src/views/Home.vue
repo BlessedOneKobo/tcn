@@ -2,7 +2,8 @@
 import { SOCKET_ADDR, STORAGE_KEY } from "@/constants";
 import Decimal from "decimal.js";
 import { RouteEnum } from "@/router";
-import LineBox from "@/components/LineBox";
+import LineBox from "@/components/LineBox.vue";
+import MainBox from "@/components/MainBox.vue";
 import voltageDisplayMixin from "@/mixins/voltage-display-mixin";
 
 const ERROR_MESSAGE_INTERVAL = 30000;
@@ -38,7 +39,7 @@ function processData(data) {
 }
 
 export default {
-  components: { LineBox },
+  components: { LineBox, MainBox },
   mixins: [voltageDisplayMixin],
   data() {
     return {
@@ -80,9 +81,7 @@ export default {
         return "";
       }
 
-      return mvarInitialValue > 0
-        ? "fa-angle-left blink"
-        : "fa-angle-right blink";
+      return mvarInitialValue > 0 ? "fa-angle-left blink" : "fa-angle-right blink";
     },
     inArrowClass() {
       const {
@@ -118,7 +117,9 @@ export default {
         return "";
       }
 
-      return powerInitialValue > 0 ? "fa-angle-double-down blink" : "fa-angle-double-up blink";
+      return powerInitialValue > 0
+        ? "fa-angle-double-down blink"
+        : "fa-angle-double-up blink";
     },
   },
   watch: {
@@ -136,6 +137,9 @@ export default {
     },
   },
   methods: {
+    handleContainerClick() {
+      this.$modal.show("linebox-modal");
+    },
     connect(reconnect = false) {
       this.ws = new WebSocket(SOCKET_ADDR);
 
@@ -224,10 +228,9 @@ export default {
 
     <div id="grid-container">
       <div id="col1">
-
         <div id="sakete">
           <b style="font-size: 18px">SAKETE TS</b>
-          <div id="sakete-nw1">
+          <div id="sakete-nw1" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="NW1" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -235,10 +238,10 @@ export default {
           <!-- Horizontal arrow from nw1 -->
           <hr id="sakete-nw1-h" />
         </div>
-        
+
         <div id="akangba">
           <b style="font-size: 18px">AKANGBA TS</b>
-          <div id="akangba-w3l">
+          <div id="akangba-w3l" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="W3L" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -246,7 +249,7 @@ export default {
           <!-- Horizontal arrow from w3l -->
           <hr id="akangba-w3l-h" />
 
-          <div id="akangba-w4l">
+          <div id="akangba-w4l" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="W4L" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -254,67 +257,67 @@ export default {
           <!-- Horizontal arrow from w4l -->
           <hr id="akangba-w4l-h" />
         </div>
-        
+
         <div id="ikeja-west">
           <b style="font-size: 18px">IKEJA-WEST TS</b>
-          <div id="ikejaW-nw1">
+          <div id="ikejaW-nw1" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="NW1" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <div id="ikejaW-r1w">
+          <div id="ikejaW-r1w" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="R1W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <div id="ikejaW-h1w">
+          <div id="ikejaW-h1w" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="H1W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <div id="ikejaW-m5w">
+          <div id="ikejaW-m5w" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="M5W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <div id="ikejaW-w3l">
+          <div id="ikejaW-w3l" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="W3L" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <div id="ikejaW-w4l">
+          <div id="ikejaW-w4l" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="W4L" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <div id="ikejaW-k7w">
+          <div id="ikejaW-k7w" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="K7W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
           <span id="ikejaW-k7w-v" :class="arrowDisplayClass">
             <i
-                id="ikejaW-k7w-v-arrow-up"
-                class="fas"
-                :class="[inArrowClass, arrowDisplayClass]"
-              >
-              </i>
-              <i
-                id="ikejaW-k7w-v-double-arrow"
-                class="fas"
-                :class="[inDArrowClass, arrowDisplayClass]"
-              >
-              </i>
-            </span>
+              id="ikejaW-k7w-v-arrow-up"
+              class="fas"
+              :class="[inArrowClass, arrowDisplayClass]"
+            >
+            </i>
+            <i
+              id="ikejaW-k7w-v-double-arrow"
+              class="fas"
+              :class="[inDArrowClass, arrowDisplayClass]"
+            >
+            </i>
+          </span>
 
-          <div id="ikejaW-k8w">
+          <div id="ikejaW-k8w" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="K8W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
           <span id="ikejaW-k8w-v"></span>
 
-          <div id="ikejaW-n6w">
+          <div id="ikejaW-n6w" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N6W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -326,7 +329,11 @@ export default {
         </div>
         <div id="okearo">
           <b style="font-size: 18px">OKE-ARO TS</b>
-          <div id="okearo-k7w">
+          <div
+            id="okearo-k7w"
+            class="linebox-container"
+            @click="handleContainerClick"
+          >
             <!--line box content starts -->
             <LineBox name="K7W" :transmissionData="transmissionData" />
             <!-- Line Box content ends -->
@@ -343,21 +350,21 @@ export default {
             :class="[outDArrowClass, arrowDisplayClass]"
           ></i>
 
-          <div id="okearo-k8w">
+          <div id="okearo-k8w" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="K8W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
           <hr id="okearo-k8w-h" />
 
-          <div id="okearo-n8k">
+          <div id="okearo-n8k" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N8K" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
           <hr id="okearo-n8k-h" />
 
-          <div id="okearo-n7k">
+          <div id="okearo-n7k" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N7K" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -367,7 +374,7 @@ export default {
 
         <div id="ajah">
           <b style="font-size: 18px">AJAH TS</b>
-          <div id="ajah-n3j">
+          <div id="ajah-n3j" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N3J" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -375,7 +382,7 @@ export default {
           <!-- Horizontal arrow from n3j -->
           <hr id="ajah-n3j-h" />
 
-          <div id="ajah-n4j">
+          <div id="ajah-n4j" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N4J" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -383,7 +390,7 @@ export default {
           <!-- Horizontal arrow from n4j -->
           <hr id="ajah-n4j-h" />
 
-          <div id="ajah-j1e">
+          <div id="ajah-j1e" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="J1E" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -391,7 +398,7 @@ export default {
           <!-- Horizontal arrow from n3j -->
           <hr id="ajah-j1e-h" />
 
-          <div id="ajah-j1b">
+          <div id="ajah-j1b" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="J1B" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -402,37 +409,37 @@ export default {
 
         <div id="egbin">
           <b style="font-size: 18px">EGBIN TS</b>
-          <div id="egbin-n7k">
+          <div id="egbin-n7k" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N7K" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
           <span id="egbin-n7k-v"></span>
 
-          <div id="egbin-n8k">
+          <div id="egbin-n8k" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N8K" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
           <span id="egbin-n8k-v"></span>
 
-          <div id="egbin-n6w">
+          <div id="egbin-n6w" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N6W" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <div id="egbin-b6n">
+          <div id="egbin-b6n" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="B6N" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
 
-          <div id="egbin-n3j">
+          <div id="egbin-n3j" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N3J" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <div id="egbin-n4j">
+          <div id="egbin-n4j" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="N4J" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -441,12 +448,12 @@ export default {
 
         <div id="alagbon">
           <b style="font-size: 18px">ALAGBON TS</b>
-          <div id="alagbon-j1b">
+          <div id="alagbon-j1b" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="J1B" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
-          <div id="alagbon-b1e">
+          <div id="alagbon-b1e" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="B1E" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -457,7 +464,7 @@ export default {
 
         <div id="lekki">
           <b style="font-size: 18px">LEKKI TS</b>
-          <div id="lekki-j1e">
+          <div id="lekki-j1e" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="J1E" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
@@ -465,18 +472,28 @@ export default {
           <!-- Vertical arrow from j1e -->
           <span id="lekki-j1e-v"></span>
 
-          <div id="lekki-b1e">
+          <div id="lekki-b1e" class="linebox-container">
             <!--line box content starts -->
             <LineBox name="B1E" :transmissionData="defaultTransmissionData" />
             <!-- Line Box content ends -->
           </div>
         </div>
-
-
       </div>
     </div>
+    <modal name="linebox-modal" class="linebox-modal">
+      <MainBox name="K7W" :transmissionData="transmissionData" />
+    </modal>
   </div>
 </template>
+
+<style>
+.v--modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2em 4em !important;
+}
+</style>
 
 <style scoped>
 .blink {
@@ -544,6 +561,12 @@ hr.success,
 .fas.success,
 .general.success {
   color: #0f7f0f;
+}
+.linebox-container {
+  transition: transform 0.3s;
+}
+.linebox-container:hover {
+  cursor: pointer;
 }
 /*
 .main-card {
