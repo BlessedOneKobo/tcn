@@ -13,7 +13,7 @@ const transmissionUnit = Object.freeze({
 export default {
   name: "LineBox",
   props: [
-    "arrowClass",
+    "arrowDisplayClass",
     "outArrowClass",
     "outDArrowClass",
     "name",
@@ -30,10 +30,21 @@ export default {
         text: "",
         type: "",
       },
-      status: false,
+      status: true,
     };
   },
   computed: {
+    cannotToggleStatus() {
+      const {
+        voltage: { initialValue: initialVoltage },
+      } = this.transmissionData;
+
+      if (!status && !initialVoltage) {
+        return false;
+      }
+
+      return initialVoltage === null || initialVoltage > 0;
+    },
     hasEmptyTransmissionValue() {
       return Object.values(this.transmissionData).includes("");
     },
@@ -86,7 +97,12 @@ export default {
       <div class="status-section">
         <div class="status-button-container">
           <p>Status</p>
-          <toggle-button v-model="status" color="#5A98F4" labels />
+          <toggle-button
+            v-model="status"
+            color="#5A98F4"
+            :disabled="cannotToggleStatus"
+            labels
+          />
         </div>
         <div class="radio-group">
           <label>

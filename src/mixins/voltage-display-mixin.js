@@ -10,7 +10,7 @@ export default {
       } = this.transmissionData;
       const { voltage: voltageThreshold } = threshold;
 
-      if (!voltageAbsValue) {
+      if (!voltageAbsValue || voltageAbsValue.eq(0)) {
         return "";
       }
 
