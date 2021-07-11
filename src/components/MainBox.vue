@@ -18,6 +18,7 @@ export default {
     "outDArrowClass",
     "name",
     "transmissionData",
+    "isOn",
   ],
   mixins: [voltageDisplayMixin],
   components: {
@@ -30,7 +31,7 @@ export default {
         text: "",
         type: "",
       },
-      status: true,
+      status: this.isOn,
     };
   },
   computed: {

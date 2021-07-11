@@ -508,6 +508,7 @@ export default {
           arrowDisplayClass,
           outArrowClass,
           outDArrowClass,
+          isOn: true,
         }"
       />
     </modal>
@@ -515,6 +516,7 @@ export default {
       <MainBox
         v-bind="{
           transmissionData: defaultTransmissionData,
+          isOn: false,
         }"
       />
     </modal>
